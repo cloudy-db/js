@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "ipfs": "^0.28.2",
+    "orbit-db": "^0.19.7"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^22.4.2"
+  }
+}
