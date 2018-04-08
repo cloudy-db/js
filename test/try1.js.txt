@@ -1,0 +1,98 @@
+const Calendar = require("../src/calendar");
+const Event = require("../src/pojo/Event");
+const IPFSRepo = require('ipfs-repo')
+const sleep = require("await-sleep");
+
+
+/**
+ * utility helper for waiting for database sync
+ * @param {Cloudy} cloudy
+ * @returns {Promise<>} a prmoise that resolves when `replicated` event is emitted
+ */ 
+function waitTillReplicated(cloudy) {
+	return new Promise(function(resolve, reject) {
+		cloudy.once("replicated", function() {
+			resolve(arguments);
+		});
+	});
+}
+
+const connectIpfsNodes = async (ipfs1, ipfs2) => {
+	const id1 = await ipfs1.id()
+	const id2 = await ipfs2.id()
+	await ipfs1.swarm.connect(id2.addresses[0])
+	await ipfs2.swarm.connect(id1.addresses[0])
+}
+  
+const waitForPeers = (ipfs, peersToWait, topic, callback) => {
+	return new Promise((resolve, reject) => {
+	  const i = setInterval(async () => {
+		const peers = await ipfs.pubsub.peers(topic)
+		console.log("same topic peers:", peers);
+		const hasAllPeers = peersToWait.map((e) => peers.includes(e)).filter((e) => e === false).length === 0
+		if (hasAllPeers) {
+		  clearInterval(i)
+		  resolve()
+		}
+	  }, 500)
+	})
+  }
+  
+
+(async function() {
+	const instance1 = await Calendar.create("test2" + Math.floor(Math.random() * 1000000), {create: true}, {
+		repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance1"),
+	}, "./storage/orbitdb1");
+
+	console.log("address of DB", instance1.address);
+	// await sleep(3000);
+
+	const instance2 = await Calendar.create(instance1.address, {create: false, sync: true}, {
+		repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance2"),
+	}, "./storage/orbitdb2");
+
+	const instance3 = await Calendar.create(instance1.address, {create: false, sync: true}, {
+		repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance3"),
+	}, "./storage/orbitdb3");
+
+	console.error("success!")
+
+	function listAllDb() {
+		console.log("instance1", instance1.getEvents());
+		console.log("instance2", instance2.getEvents());
+		console.log("instance3", instance3.getEvents());
+	}
+
+	// instance1.db.events.on("ready", function() {console.log("ready", ...arguments);})
+	// instance2.db.events.on("ready", function() {console.log("ready", ...arguments);})
+	instance1.db.events.on("replicate.progress", function() {console.log("1 replicate.progress", ...arguments);})
+	instance2.db.events.on("replicate.progress", function() {console.log("2 replicate.progress", ...arguments);})
+	instance3.db.events.on("replicate.progress", function() {console.log("3 replicate.progress", ...arguments);})
+	// instance1.db.events.on("load.progress", function() {console.log("load.progress", ...arguments);})
+	// instance2.db.events.on("load.progress", function() {console.log("load.progress", ...arguments);})
+	// instance1.db.events.on("replicated", function() {console.log("(1) replicated", ...arguments);})
+	// instance2.db.events.on("replicated", function() {console.log("(2) replicated", ...arguments);})
+	instance3.db.events.on("replicated", function() {
+		console.log("(3) replicated", ...arguments);
+	})
+	// instance2.db.events.on("replicated", function() {console.log("replicated", ...arguments);})
+
+	setInterval(() => {
+		listAllDb();
+	}, 5000);
+
+	await instance1.addEvent(new Event(new Date(), "test from 1"));
+	// await waitTillReplicated(instance2);
+	let results = instance2.getEvents(() => true);
+	console.log("results1", results);
+
+	await instance2.addEvent(new Event(new Date(), "test from 2"));
+	// await waitTillReplicated(instance1);
+	results = instance1.getEvents(() => true);
+	console.log("results3", results);
+
+	await instance3.addEvent(new Event(new Date(), "test from 3"));
+	// await waitTillReplicated(instance1);
+	results = instance2.getEvents(() => true);
+	console.log("results4", results);
+})()

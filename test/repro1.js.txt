@@ -1,0 +1,67 @@
+const IPFS = require('ipfs')
+const IPFSRepo = require('ipfs-repo')
+const sleep = require("await-sleep");
+const wrtc = require('wrtc');
+const WStar = require('libp2p-webrtc-star');
+const wstar = new WStar({ wrtc: wrtc });
+const OrbitDB = require('orbit-db');
+
+wstar.length;
+wstar.discovery.length;
+
+async function getDbInstance(id = "0", dbOptions, address = "repro" + Math.floor(Math.random()*12345678)) {
+	const ipfs = new IPFS({
+		EXPERIMENTAL: {
+			pubsub: true,
+		},
+		repo: new IPFSRepo("./storage/ipfs-repo-" + id),
+		config: {
+			Addresses: {
+				Swarm: [
+					"/dns4/star-signal.cloud.ipfs.team/tcp/443/wss/p2p-webrtc-star",
+					// "/ip4/0.0.0.0/tcp/" + (10000 + Math.floor(Math.random()*55535)),
+					// "/dns4/nas1.isaac.pw/tcp/9090/ws/p2p-webrtc-star",
+					// "/ip6/2001:470:19:75e::1/tcp/9090/ws/p2p-webrtc-star",
+				],					  
+			}
+		},
+		libp2p: {
+			modules: {
+				transport: [wstar],
+				discovery: [wstar.discovery]
+			}
+		},
+
+	});
+	const orbitDb = await new Promise(function(resolve, reject){
+		ipfs.once("error", function() {reject(arguments);});
+		ipfs.once("ready", () => {resolve(new OrbitDB(ipfs, "./storage/orbitdb-" + id));});
+	});
+
+	const db = await orbitDb.docs(address, Object.assign({admin: ['*'], write: ['*']}, dbOptions));
+	await db.load();
+
+	setInterval(() => {
+		try {
+			console.log("instance " + id, db.query(() => true));
+		} catch (e) {
+			console.log("swallowed exception");
+		}
+	}, 5000);
+
+	return db;
+}
+
+(async function() {
+	const instance1 = await getDbInstance(1, {create: true});
+	const instance2 = await getDbInstance(2, {sync: true}, instance1.address);
+	const instance3 = await getDbInstance(3, {sync: true}, instance1.address);
+
+	instance1.events.on("replicate.progress", function() {console.log("(1) replicate.progress", ...arguments);})
+	instance2.events.on("replicate.progress", function() {console.log("(2) replicate.progress", ...arguments);})
+	instance3.events.on("replicate.progress", function() {console.log("(3) replicate.progress", ...arguments);})
+
+	await instance1.put({_id: "" + Math.floor(Math.random()*12345678), doc: "hello from instance 1"});
+	await instance2.put({_id: "" + Math.floor(Math.random()*12345678), doc: "hello from instance 2"});
+	await instance3.put({_id: "" + Math.floor(Math.random()*12345678), doc: "hello from instance 3"});
+})()

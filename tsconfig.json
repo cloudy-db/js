@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"module": "CommonJS",
+		"noEmit": true,
+		"allowJs": true,
+		"checkJs": true,
+		"target": "es5",
+		"lib": [
+			"es6",
+			"es2017",
+			"dom"
+		]
+	},
+	"files": [
+		"lib.d.ts"
+	],
+	"include": [
+		"src/**/*"
+	]
+}
