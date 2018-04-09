@@ -40,7 +40,7 @@ if (typeof self === "undefined") {
  * 
  */
 
- /**
+/**
   * helper method to create an IPFS instance based on user-supplied params
   * @param {Object} ipfsOrOptions options to be passed to IPFS constructor
   * @returns {Promise<IPFS>}
@@ -110,7 +110,7 @@ class Cloudy extends EventEmitter {
 		this.storeDefaults = storeDefaults;
 
 		if (ipfsOrOptions._libp2pNode) {
-			this.ipfs = ipfsOrOptions
+			this.ipfs = ipfsOrOptions;
 		}
 		(async () => {
 			try {

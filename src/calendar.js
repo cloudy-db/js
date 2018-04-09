@@ -36,6 +36,7 @@ class Calendar extends EventEmitter {
 	 * @returns {Promise<Calendar>}
 	 */
 	static async create(dbAddress = "new-database", storeOptions = {}, ...args) {
+		// @ts-ignore
 		const cloudy = await Cloudy.create(...args);
 		const db = await cloudy.store(dbAddress, storeOptions);
 		await db.load();
