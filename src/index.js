@@ -2,8 +2,19 @@ const IPFS = require("ipfs");
 const OrbitDB = require("orbit-db");
 const IPFSRepo = require("ipfs-repo");
 
+const iceServers = [];
+
+let wrtc, WStar;
+if (typeof self === "undefined") {
+	wrtc = require("wrtc");
+	WStar = require("libp2p-webrtc-star");
+} else {
+	throw new Error("Browser not implemented");
+}
+
 /** @typedef {*} IPFS */
 /** @typedef {*} DocumentStore */
+/** @typedef {*} EventStore */
 
 /**
  * OrbitDB class {@link https://github.com/orbitdb/orbit-db}
@@ -26,6 +37,10 @@ class Cloudy {
 		/** @type {OrbitDB} */
 		// @ts-ignore
 		this.orbitDb = new OrbitDB(ipfs, directory, options);
+		this.orbitDb.eventlog("devices").then((store) => {
+			/** @type {EventStore} */
+			this.devices = store;
+		});
 	}
 
 	/**
@@ -37,9 +52,7 @@ class Cloudy {
 	 */
 	static create(ipfsOptions = {}, directory, options) {
 		if (typeof self === "undefined") {
-			const wrtc = require("wrtc");
-			const WStar = require("libp2p-webrtc-star");
-			const wstar = new WStar({ wrtc: wrtc });
+			const wstar = new WStar({ wrtc: wrtc, spOptions: {config: { iceServers: iceServers}} });
 			ipfsOptions = Object.assign({
 				repo: new IPFSRepo("./storage/ipfs-repo"),
 				config: {
@@ -80,6 +93,7 @@ class Cloudy {
 				resolve(new Cloudy(ipfs, directory, options));
 			});
 		});
+
 	}
 
 	/**
