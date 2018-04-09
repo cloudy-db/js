@@ -52,7 +52,7 @@ class Cloudy {
 	 */
 	static create(ipfsOptions = {}, directory, options) {
 		if (typeof self === "undefined") {
-			const wstar = new WStar({ wrtc: wrtc, spOptions: {config: { iceServers: iceServers}} });
+			const wstar = new WStar({ wrtc: wrtc, spOptions: { config: {iceServers: iceServers}} });
 			ipfsOptions = Object.assign({
 				repo: new IPFSRepo("./storage/ipfs-repo"),
 				config: {
