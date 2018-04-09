@@ -47,8 +47,8 @@ class Cloudy {
 						Swarm: [
 							// "/dns4/star-signal.cloud.ipfs.team/tcp/443/wss/p2p-webrtc-star",
 							// "/ip4/0.0.0.0/tcp/" + (10000 + Math.floor(Math.random()*55535)),
-							// "/dns4/nas1.isaac.pw/tcp/9090/ws/p2p-webrtc-star",
-							"/dns6/rpi-ipv6.test/tcp/9090/ws/p2p-webrtc-star",
+							"/dns4/nas1.isaac.pw/tcp/9090/ws/p2p-webrtc-star",
+							// "/dns6/rpi-ipv6.test/tcp/9090/ws/p2p-webrtc-star",
 						],					  
 					}
 				}
