@@ -2,19 +2,24 @@ const IPFS = require("ipfs");
 const OrbitDB = require("orbit-db");
 const IPFSRepo = require("ipfs-repo");
 
-const iceServers = [
-	{
-		urls: "stun:stun.l.google.com:19302",
-	},
-	{
-		urls: "stun:global.stun.twilio.com:3478?transport=udp",
-	},
-	{
-		urls: "turn:numb.viagenie.ca",
-		username: "numb.viagenie.ca@isaac.pw",
-		credential: "f2LZVN5PdXKRUT",
-	},
-];
+const spOptions = {
+	trickle: true,
+	config: {
+		iceServers: [
+			{
+				urls: "stun:stun.l.google.com:19302",
+			},
+			{
+				urls: "stun:global.stun.twilio.com:3478?transport=udp",
+			},
+			{
+				urls: "turn:numb.viagenie.ca",
+				username: "numb.viagenie.ca@isaac.pw",
+				credential: "f2LZVN5PdXKRUT",
+			},
+		]
+	}
+};
 
 let wrtc, WStar;
 if (typeof self === "undefined") {
@@ -65,7 +70,7 @@ class Cloudy {
 	 */
 	static create(ipfsOptions = {}, directory, options) {
 		if (typeof self === "undefined") {
-			const wstar = new WStar({ wrtc: wrtc, spOptions: {config: {iceServers: iceServers}} });
+			const wstar = new WStar({ wrtc: wrtc, spOptions: spOptions });
 			ipfsOptions = Object.assign({
 				repo: new IPFSRepo("./storage/ipfs-repo"),
 				config: {
@@ -73,11 +78,12 @@ class Cloudy {
 						Swarm: [
 							// "/dns4/star-signal.cloud.ipfs.team/tcp/443/wss/p2p-webrtc-star",
 							// "/ip4/0.0.0.0/tcp/" + (10000 + Math.floor(Math.random()*55535)),
-							"/ip4/172.28.2.3/tcp/9090/ws/p2p-webrtc-star",
-							// "/dns4/nas1.isaac.pw/tcp/9090/ws/p2p-webrtc-star",
+							// "/ip4/172.28.2.3/tcp/9090/ws/p2p-webrtc-star",
+							"/dns4/nas1.isaac.pw/tcp/9090/ws/p2p-webrtc-star",
 							// "/dns6/rpi-ipv6.test/tcp/9090/ws/p2p-webrtc-star",
 						],					  
-					}
+					},
+					Bootstrap: [],
 				}
 			}, ipfsOptions, {
 				libp2p: {

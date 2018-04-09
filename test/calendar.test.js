@@ -32,11 +32,11 @@ describe("The Calendar class", function() {
 	let instance2;
 	
 	before(async () => {
-		instance1 = await Calendar.create("test" + Math.floor(Math.random() * 1000000), {create: true}, undefined, {
+		instance1 = await Calendar.create("test" + Math.floor(Math.random() * 1000000), {create: true}, {
 			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance1"),
 		}, "./storage/orbitdb1");
 
-		instance2 = await Calendar.create(instance1.address, {create: false, sync: true}, instance1.cloudy.ipfs, {
+		instance2 = await Calendar.create(instance1.address, {create: false, sync: true}, {
 			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance2"),
 		}, "./storage/orbitdb2");
 

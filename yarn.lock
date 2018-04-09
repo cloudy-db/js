@@ -4313,7 +4313,31 @@ libp2p-tcp@~0.11.2, libp2p-tcp@~0.11.6:
     once "^1.4.0"
     stream-to-pull-stream "^1.7.2"
 
-"libp2p-webrtc-star@git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#allow-simple-peers-options-v0.13.4", libp2p-webrtc-star@~0.13.4:
+"libp2p-webrtc-star@git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#allow-simple-peers-options-v0.13.4":
+  version "0.13.4"
+  resolved "git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#f9a98709910e42b3f4f13566a6f3d6b153299b5d"
+  dependencies:
+    async "^2.6.0"
+    debug "^3.1.0"
+    detect-node "^2.0.3"
+    epimetheus "^1.0.55"
+    hapi "^16.6.2"
+    inert "^4.2.1"
+    interface-connection "~0.3.2"
+    mafmt "^4.0.0"
+    minimist "^1.2.0"
+    multiaddr "^3.0.2"
+    once "^1.4.0"
+    peer-id "~0.10.6"
+    peer-info "~0.11.6"
+    pull-stream "^3.6.2"
+    simple-peer "^8.5.0"
+    socket.io "^2.0.4"
+    socket.io-client "^2.0.4"
+    stream-to-pull-stream "^1.7.2"
+    webrtcsupport "github:ipfs/webrtcsupport"
+
+libp2p-webrtc-star@~0.13.4:
   version "0.13.4"
   resolved "git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#41a118b0402dde2168fb25104790ca97a1f9f359"
   dependencies:
