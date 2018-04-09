@@ -3,6 +3,7 @@ const Event = require("../src/pojo/Event");
 const IPFSRepo = require('ipfs-repo')
 const sleep = require("await-sleep");
 const assert = require("chai").assert;
+  
 
 /**
  * utility helper for waiting for database sync
@@ -31,15 +32,19 @@ describe("The Calendar class", function() {
 	let instance2;
 	
 	before(async () => {
-		instance1 = await Calendar.create("test" + Math.floor(Math.random() * 1000000), {create: true}, {
+		instance1 = await Calendar.create("test" + Math.floor(Math.random() * 1000000), {create: true}, undefined, {
 			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance1"),
 		}, "./storage/orbitdb1");
 
-		instance2 = await Calendar.create(instance1.address, {create: false, sync: true}, {
+		instance2 = await Calendar.create(instance1.address, {create: false, sync: true}, instance1.cloudy.ipfs, {
 			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance2"),
 		}, "./storage/orbitdb2");
 
 		console.log("initialized 2 instances");
+
+		// await connectPeers(instance1, instance2);
+
+		console.log("connected peers");
 	});
 
 	it("allows people to create events", async function() {

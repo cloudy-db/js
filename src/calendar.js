@@ -12,6 +12,14 @@ function mapEvents(event) {
 	return event;
 }
 
+async function connectPeers(ipfs1, ipfs2) {
+	console.log("entered scope of ipfs1 / ipfs2");
+	const id1 = await ipfs1.id()
+	const id2 = await ipfs2.id()
+	await ipfs1.swarm.connect(id2.addresses[0])
+	await ipfs2.swarm.connect(id1.addresses[0])
+}
+
 /** @typedef {*} DocumentStore */
 
 /**
@@ -35,8 +43,12 @@ class Calendar extends EventEmitter {
 	 * @param {...*} args options to pass to Cloudy.create
 	 * @returns {Promise<Calendar>}
 	 */
-	static async create(dbAddress = "new-database", storeOptions = {}, ...args) {
+	static async create(dbAddress = "new-database", storeOptions = {}, otherPeer, ...args) {
 		const cloudy = await Cloudy.create(...args);
+		if (otherPeer) {
+			await connectPeers(cloudy.ipfs, otherPeer);
+			console.log("peers connected");
+		}
 		const db = await cloudy.store(dbAddress, storeOptions);
 		await db.load();
 		const calendar = new Calendar(cloudy, db);
