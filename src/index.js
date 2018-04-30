@@ -98,16 +98,17 @@ class Cloudy extends EventEmitter {
 	/**
 	 * @param {IPFS|Object} ipfsOrOptions ready-ed IPFS instance OR an object which will be passed to the IPFS constructor
 	 * @param {string} [directory]
-	 * @param {Object} [storeDefaults] default options for stores 
+	 * @param {?string} [devicesDbAddress] database address for syncing devices. null for new Cloudy database
 	 * @param {string} [deviceId] unique device ID -- should be SAME each time user invokes the app
 	 * @param {Function} [wakeupFunction] a function to wake up the device for syncing. return a promise to pause the sync
+	 * @param {Object} [storeDefaults] default options for stores 
 	 * @param {*} [options] options to pass to OrbitDB constructor
 	 */
-	constructor(ipfsOrOptions = {}, directory = "./storage/orbitdb", storeDefaults, deviceId, wakeupFunction, options) {
+	constructor(ipfsOrOptions = {}, directory = "./storage/orbitdb", devicesDbAddress, deviceId, wakeupFunction, storeDefaults, options) {
 		super();
 
 		/** @type {Object} default options for stores  */
-		this.storeDefaults = storeDefaults;
+		this.storeDefaults = Object.assign(devicesDbAddress === null ? {create: true, sync: false} : {create: false, sync: true}, {admin: ["*"], write: ["*"]}, storeDefaults );
 
 		if (ipfsOrOptions._libp2pNode) {
 			this.ipfs = ipfsOrOptions;
@@ -139,15 +140,16 @@ class Cloudy extends EventEmitter {
 	 * Short hand to create a Cloudy instance.
 	 * @param {IPFS|Object} ipfsOrOptions ready-ed IPFS instance OR an object which will be passed to the IPFS constructor
 	 * @param {string} [directory]
-	 * @param {Object} [storeDefaults] default options for stores 
+	 * @param {?string} [devicesDbAddress] database address for syncing devices. null for new Cloudy database
 	 * @param {string} [deviceId] unique device ID -- should be SAME each time user invokes the app
 	 * @param {Function} [wakeupFunction] a function to wake up the device for syncing. return a promise to pause the sync
+	 * @param {Object} [storeDefaults] default options for stores 
 	 * @param {*} [options] options to pass to OrbitDB constructor
 	 * @return {Promise<Cloudy>} - Cloudy instance 
 	 */
-	static create(ipfsOrOptions, directory, storeDefaults, deviceId, wakeupFunction, options) {
+	static create(ipfsOrOptions, directory, devicesDbAddress, deviceId, wakeupFunction, storeDefaults, options) {
 		return new Promise((resolve, reject) => {
-			const cloudy = new Cloudy(ipfsOrOptions, directory, storeDefaults, deviceId, wakeupFunction, options);
+			const cloudy = new Cloudy(ipfsOrOptions, directory, devicesDbAddress, deviceId, wakeupFunction, storeDefaults, options);
 			cloudy.once("ready", () => {
 				resolve(cloudy);
 			});
@@ -164,7 +166,7 @@ class Cloudy extends EventEmitter {
 	 * @returns {Promise<DocumentStore>}
 	 */
 	store(nameOrAddress, options) {
-		options = Object.assign({admin: ["*"], write: ["*"]}, this.storeDefaults, options);
+		options = Object.assign({}, this.storeDefaults, options);
 		return this.orbitDb.docs(nameOrAddress, options);
 	}
 }

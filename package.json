@@ -1,4 +1,6 @@
 {
+  "name": "cloudy",
+  "version": "0.0.1",
   "main": "src/index.js",
   "dependencies": {
     "chai": "^4.1.2",
@@ -25,8 +27,5 @@
     "eslint": "^4.19.0",
     "jsdoc": "^3.5.5",
     "typescript": "^2.8.1"
-  },
-  "jest": {
-    "testEnvironment": "node"
   }
 }
