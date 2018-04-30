@@ -25,6 +25,12 @@ async function connectIpfsNodes (ipfs1, ipfs2) {
 	await ipfs2.swarm.connect(id1.addresses[0])
 }
 
+function deleteAll(instance) {
+	let all = instance.db.query(() => true);
+	all = all.map((doc) => instance.db.del(doc._id));
+	return Promise.all(all);
+}
+
 describe("The Calendar class", function() {
 	/** @type {Calendar} */
 	let instance1;
@@ -33,21 +39,21 @@ describe("The Calendar class", function() {
 	
 	before(async () => {
 		const name = "test" + Math.floor(Math.random() * 1000000);
-		instance1 = await Calendar.create(name, null, {create: true, sync: false}, {
+		instance1 = await Calendar.create(null, {create: true, sync: false}, {
 			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance1"),
 		}, "./storage/orbitdb1");
 
 
 		await sleep(3600);
-		instance2 = await Calendar.create(name, instance1.namespace, {sync: true}, {
+		instance2 = await Calendar.create(instance1.namespace, {sync: true}, {
 			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance2"),
 		}, "./storage/orbitdb2");
 
 		console.log("initialized 2 instances");
 
-		// await connectPeers(instance1, instance2);
+		await deleteAll(instance2);
 
-		console.log("connected peers");
+		console.log("Finished deleting existing records");
 	});
 
 	it("allows people to create events", async function() {

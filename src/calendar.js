@@ -13,6 +13,7 @@ function mapEvents(event) {
 }
 
 /** @typedef {*} DocumentStore */
+/** @typedef {*} OrbitDBAddress */
 
 /**
  * DAO for calendar objects (events, etc.)
@@ -30,17 +31,16 @@ class Calendar extends EventEmitter {
 	}
 
 	/**
-	 * @param {*} dbAddress existing database address (can be JS object), otherwise give a random name to initiate a new database
 	 * @param {?string} [namespace] database address for syncing devices. null for new Cloudy database
 	 * @param {Object} storeOptions
 	 * @param {...*} args options to pass to Cloudy.create
 	 * @returns {Promise<Calendar>}
 	 */
-	static async create(dbAddress, namespace, storeOptions = {}, ...args) {
+	static async create(namespace, storeOptions = {}, ...args) {
 		args[2] = namespace;
 		// @ts-ignore
 		const cloudy = await Cloudy.create(...args);
-		const db = await cloudy.store(dbAddress, storeOptions);
+		const db = await cloudy.store("calendar", storeOptions);
 		await db.load();
 		const calendar = new Calendar(cloudy, db);
 		return calendar;
