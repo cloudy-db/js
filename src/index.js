@@ -2,6 +2,7 @@ const IPFS = require("ipfs");
 const OrbitDB = require("orbit-db");
 const IPFSRepo = require("ipfs-repo");
 const EventEmitter = require("events");
+const uuid = require("uuid/v4");
 
 const spOptions = {
 	trickle: true,
@@ -98,17 +99,18 @@ class Cloudy extends EventEmitter {
 	/**
 	 * @param {IPFS|Object} ipfsOrOptions ready-ed IPFS instance OR an object which will be passed to the IPFS constructor
 	 * @param {string} [directory]
-	 * @param {?string} [devicesDbAddress] database address for syncing devices. null for new Cloudy database
+	 * @param {?string} [namespace] database address for syncing devices. null for new Cloudy database
 	 * @param {string} [deviceId] unique device ID -- should be SAME each time user invokes the app
 	 * @param {Function} [wakeupFunction] a function to wake up the device for syncing. return a promise to pause the sync
 	 * @param {Object} [storeDefaults] default options for stores 
 	 * @param {*} [options] options to pass to OrbitDB constructor
 	 */
-	constructor(ipfsOrOptions = {}, directory = "./storage/orbitdb", devicesDbAddress, deviceId, wakeupFunction, storeDefaults, options) {
+	constructor(ipfsOrOptions = {}, directory = "./storage/orbitdb", namespace, deviceId, wakeupFunction, storeDefaults, options) {
 		super();
 
 		/** @type {Object} default options for stores  */
-		this.storeDefaults = Object.assign(devicesDbAddress === null ? {create: true, sync: false} : {create: false, sync: true}, {admin: ["*"], write: ["*"]}, storeDefaults );
+		this.storeDefaults = Object.assign(namespace === null ? {sync: false} : {sync: true}, {admin: ["*"], write: ["*"]}, storeDefaults);
+		this.namespace = namespace || uuid();
 
 		if (ipfsOrOptions._libp2pNode) {
 			this.ipfs = ipfsOrOptions;
@@ -140,16 +142,16 @@ class Cloudy extends EventEmitter {
 	 * Short hand to create a Cloudy instance.
 	 * @param {IPFS|Object} ipfsOrOptions ready-ed IPFS instance OR an object which will be passed to the IPFS constructor
 	 * @param {string} [directory]
-	 * @param {?string} [devicesDbAddress] database address for syncing devices. null for new Cloudy database
+	 * @param {?string} [namespace] database address for syncing devices. null for new Cloudy database
 	 * @param {string} [deviceId] unique device ID -- should be SAME each time user invokes the app
 	 * @param {Function} [wakeupFunction] a function to wake up the device for syncing. return a promise to pause the sync
 	 * @param {Object} [storeDefaults] default options for stores 
 	 * @param {*} [options] options to pass to OrbitDB constructor
 	 * @return {Promise<Cloudy>} - Cloudy instance 
 	 */
-	static create(ipfsOrOptions, directory, devicesDbAddress, deviceId, wakeupFunction, storeDefaults, options) {
+	static create(ipfsOrOptions, directory, namespace, deviceId, wakeupFunction, storeDefaults, options) {
 		return new Promise((resolve, reject) => {
-			const cloudy = new Cloudy(ipfsOrOptions, directory, devicesDbAddress, deviceId, wakeupFunction, storeDefaults, options);
+			const cloudy = new Cloudy(ipfsOrOptions, directory, namespace, deviceId, wakeupFunction, storeDefaults, options);
 			cloudy.once("ready", () => {
 				resolve(cloudy);
 			});
@@ -161,12 +163,13 @@ class Cloudy extends EventEmitter {
 
 	/**
 	 * create a new docstore
-	 * @param {*} nameOrAddress existing database address (can be JS object), otherwise give a random name to initiate a new database
+	 * @param {string} nameOrAddress existing database address (can be JS object), otherwise give a random name to initiate a (possibly new) database
 	 * @param {*} options
 	 * @returns {Promise<DocumentStore>}
 	 */
-	store(nameOrAddress, options) {
+	store(nameOrAddress, options = {}) {
 		options = Object.assign({}, this.storeDefaults, options);
+		// nameOrAddress = nameOrAddress.toString().startsWith && nameOrAddress.toString().startsWith("/orbitdb/") ? nameOrAddress : `${this.namespace}/${nameOrAddress}`;
 		return this.orbitDb.docs(nameOrAddress, options);
 	}
 }
