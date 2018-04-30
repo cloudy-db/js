@@ -5,15 +5,15 @@
   "dependencies": {
     "chai": "^4.1.2",
     "dev": "^0.1.3",
-    "libp2p-webrtc-star": "git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#allow-simple-peers-options-v0.13.4",
     "ipfs": "^0.28.2",
     "ipfs-repo": "^0.18.7",
     "jest": "^22.4.3",
+    "libp2p-webrtc-star": "git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#allow-simple-peers-options-v0.13.4",
     "mocha": "^5.0.5",
     "orbit-db": "^0.19.7",
     "re-emitter": "^1.1.3",
     "uuid": "^3.2.1",
-    "wrtc": "^0.1.1"
+    "wrtc": "0.1.1"
   },
   "scripts": {
     "test": "mocha",

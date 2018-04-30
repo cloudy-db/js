@@ -4072,7 +4072,7 @@ level-js@^2.2.4, level-js@~2.2.4:
     typedarray-to-buffer "~1.0.0"
     xtend "~2.1.2"
 
-level-js@timkuijsten/level.js#idbunwrapper:
+"level-js@github:timkuijsten/level.js#idbunwrapper":
   version "2.2.3"
   resolved "https://codeload.github.com/timkuijsten/level.js/tar.gz/18e03adab34c49523be7d3d58fafb0c632f61303"
   dependencies:
@@ -4333,7 +4333,7 @@ libp2p-tcp@~0.11.2, libp2p-tcp@~0.11.6:
     once "^1.4.0"
     stream-to-pull-stream "^1.7.2"
 
-"libp2p-webrtc-star@git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#allow-simple-peers-options-v0.13.4":
+"libp2p-webrtc-star@git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#allow-simple-peers-options-v0.13.4", libp2p-webrtc-star@~0.13.4:
   version "0.13.4"
   resolved "git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#f9a98709910e42b3f4f13566a6f3d6b153299b5d"
   dependencies:
@@ -4862,7 +4862,7 @@ multihashing-async@~0.4.6, multihashing-async@~0.4.7, multihashing-async@~0.4.8:
     murmurhash3js "^3.0.1"
     nodeify "^1.0.1"
 
-multiplex@dignifiedquire/multiplex:
+"multiplex@github:dignifiedquire/multiplex":
   version "6.7.0"
   resolved "https://codeload.github.com/dignifiedquire/multiplex/tar.gz/b5d5edd30454e2c978ee8c52df86f5f4840d2eab"
   dependencies:
@@ -6816,8 +6816,8 @@ taffydb@2.6.2:
   resolved "https://registry.npmjs.org/taffydb/-/taffydb-2.6.2.tgz#7cbcb64b5a141b6a2efc2c5d2c67b4e150b2a268"
 
 tar-fs@^1.13.0:
-  version "1.16.1"
-  resolved "https://registry.npmjs.org/tar-fs/-/tar-fs-1.16.1.tgz#a8382bf5d5263d50c4902732b5ebfb31007fa819"
+  version "1.16.2"
+  resolved "https://registry.npmjs.org/tar-fs/-/tar-fs-1.16.2.tgz#17e5239747e399f7e77344f5f53365f04af53577"
   dependencies:
     chownr "^1.0.1"
     mkdirp "^0.5.1"
@@ -7392,9 +7392,9 @@ write@^0.2.1:
   dependencies:
     mkdirp "^0.5.1"
 
-wrtc@^0.1.1:
-  version "0.1.4"
-  resolved "https://registry.npmjs.org/wrtc/-/wrtc-0.1.4.tgz#5be93bfe1c2a2255d1ba5f9b23955ddcaf225243"
+wrtc@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.npmjs.org/wrtc/-/wrtc-0.1.1.tgz#3853821a04c39ee1e2629b7d6e12b6db0e58379c"
   dependencies:
     download "^5.0.0"
     gunzip-maybe "^1.3.1"
