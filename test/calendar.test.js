@@ -45,6 +45,7 @@ describe("The Calendar class", function() {
 
 
 		await sleep(3600);
+		console.log("now instance2");
 		instance2 = await Calendar.create(instance1.namespace, {sync: true}, {
 			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance2"),
 		}, "./storage/orbitdb2");
