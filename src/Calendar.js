@@ -64,7 +64,7 @@ class Calendar extends EventEmitter {
 	 * @param {Function} mapper
 	 * @returns {Event[]} array of events
 	 */
-	getEvents(mapper = (() => true)) {
+	query(mapper = (() => true)) {
 		return this.db.query(mapper).map(mapEvents);
 	}
 

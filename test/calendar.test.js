@@ -62,7 +62,7 @@ describe("The Calendar class", function() {
 		const event = new Event(date, "test only haha");
 		await instance1.addEvent(event);
 		await waitTillReplicated(instance2);
-		const results = instance2.getEvents((eventObj) => eventObj.name === "test only haha");
+		const results = instance2.query((eventObj) => eventObj.name === "test only haha");
 		assert.lengthOf(results, 1);
 		assert.isOk(results[0]._id);
 		assert.deepOwnInclude(results[0], {name: "test only haha", date: date});
@@ -73,14 +73,14 @@ describe("The Calendar class", function() {
 		const event = new Event(date, "test jar haha");
 		await instance1.addEvent(event);
 		await waitTillReplicated(instance2);
-		const results = instance2.getEvents((eventObj) => eventObj.name === "test jar haha");
+		const results = instance2.query((eventObj) => eventObj.name === "test jar haha");
 		assert.lengthOf(results, 1);
 		assert.isOk(results[0]._id);
 		assert.deepOwnInclude(results[0], {name: "test jar haha", date: date});
 
 		await instance2.addEvent(Object.assign({}, event, {name: "test 1234"}));
 		await waitTillReplicated(instance1);
-		const results2 = instance1.getEvents((eventObj) => eventObj._id == event._id);
+		const results2 = instance1.query((eventObj) => eventObj._id == event._id);
 		assert.lengthOf(results2, 1);
 		assert.isOk(results2[0]._id);
 		assert.deepOwnInclude(results2[0], {name: "test 1234", date: date});
