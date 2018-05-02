@@ -23,14 +23,15 @@ const spOptions = {
 	}
 };
 
-let wrtc, WStar;
-if (typeof self === "undefined") {
+const notBrowser = (typeof self === "undefined");
+let wrtc;
+if (notBrowser) {
 	wrtc = require("wrtc");
-	WStar = require("libp2p-webrtc-star");
 } else {
 	console.error("Browser not implemented -- proceed with caution");
 	// throw new Error("Browser not implemented");
 }
+const WStar = require("libp2p-webrtc-star");
 
 /** @typedef {*} IPFS */
 /** @typedef {*} DocumentStore */

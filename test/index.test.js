@@ -1,4 +1,4 @@
-const Cloudy = require("../src/index");
+const Cloudy = require("../src/Cloudy");
 
 describe("index.js", function() {
 	it("creates a Cloudy instance", async function() {

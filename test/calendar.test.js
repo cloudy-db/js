@@ -1,4 +1,4 @@
-const Calendar = require("../src/calendar");
+const Calendar = require("../src/Calendar");
 const Event = require("../src/pojo/Event");
 const IPFSRepo = require('ipfs-repo')
 const sleep = require("await-sleep");
@@ -39,14 +39,14 @@ describe("The Calendar class", function() {
 	
 	before(async () => {
 		const name = "test" + Math.floor(Math.random() * 1000000);
-		instance1 = await Calendar.create(null, {create: true, sync: false}, {
+		instance1 = await Calendar.create(null, undefined, {
 			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance1"),
 		}, "./storage/orbitdb1");
 
 
 		await sleep(3600);
 		console.log("now instance2");
-		instance2 = await Calendar.create(instance1.namespace, {sync: true}, {
+		instance2 = await Calendar.create(instance1.namespace, undefined, {
 			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance2"),
 		}, "./storage/orbitdb2");
 
