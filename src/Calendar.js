@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const Cloudy = require("./index");
+const Cloudy = require("./Cloudy");
 const uuid = require("uuid/v4");
 const reemit = require("re-emitter");
 const EventEmitter = require("events");
