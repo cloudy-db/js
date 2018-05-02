@@ -3,7 +3,7 @@ const Cloudy = require("./Cloudy");
 const uuid = require("uuid/v4");
 const reemit = require("re-emitter");
 const EventEmitter = require("events");
-const Event = require("./pojo/Event");
+const Event = require("./pojo/CalendarEvent");
 /* eslint-disable no-unused-vars */
 
 // so that it can be optimized

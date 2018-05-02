@@ -1,5 +1,5 @@
 const Calendar = require("../src/Calendar");
-const Event = require("../src/pojo/Event");
+const Event = require("../src/pojo/CalendarEvent");
 const IPFSRepo = require('ipfs-repo')
 const sleep = require("await-sleep");
 const assert = require("chai").assert;

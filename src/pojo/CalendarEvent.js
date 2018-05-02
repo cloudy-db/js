@@ -1,4 +1,4 @@
-module.exports = class Event {
+module.exports = class CalendarEvent {
 	/**
 	 * @param {Date|string} date
 	 * @param {string} name
