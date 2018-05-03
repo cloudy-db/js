@@ -65,14 +65,14 @@ function initIpfsInstance(ipfsOrOptions) {
 				},
 				Bootstrap: [],
 			}
-		}, ipfsOrOptions, {
+		}, ipfsOrOptions, notBrowser ? {
 			libp2p: {
 				modules: {
 					transport: [wstar],
 					discovery: [wstar.discovery],
 				}
-			}
-		});
+			},
+		} : undefined);
 		const ipfs = new IPFS(Object.assign({EXPERIMENTAL: {
 			pubsub: true,
 		}}, ipfsOrOptions));
