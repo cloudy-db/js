@@ -24,6 +24,7 @@ function mapDates(bill) {
  * @property {string} currency - ISO 4217 currency code (e.g. CNY for Renmibi)
  * @property {Date} time - The time
  * @property {string} name - user who paid (e.g. Isaac)
+ * @property {?string} comment - optional comment -- downstream applications please handle this carefully
  * @property {string} _id - unique ID for the bill
  */
 

@@ -63,7 +63,7 @@ describe("The RunNumber class", function() {
 
 	it("allows people to create events", async function() {
 
-		const bill = {amount: 12345, currency: uuid(), time: new Date(), name: "Isaac"};
+		const bill = {amount: 12345, currency: uuid(), time: new Date(), name: "Isaac", comment: "cool"};
 		await instance1.addBill(bill);
 		await waitTillReplicated(instance2);
 		const results = instance2.query((billObj) => billObj.currency === bill.currency);
@@ -73,7 +73,7 @@ describe("The RunNumber class", function() {
 	});
 
 	it("allows people to override events", async function() {
-		const bill1 = {amount: 12345, currency: uuid(), time: new Date(), name: "Isaac"};
+		const bill1 = {amount: 12345, currency: uuid(), time: new Date(), name: "Isaac2", comment: "nice"};
 		await instance1.addBill(bill1);
 		await waitTillReplicated(instance2);
 		const results1 = instance2.query((billObj) => billObj.currency === bill1.currency);
