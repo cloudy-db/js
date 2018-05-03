@@ -2920,32 +2920,9 @@ ipfs-multipart@~0.1.0:
     pull-stream "^3.6.1"
     safe-buffer "^5.1.1"
 
-ipfs-repo@^0.18.7:
-  version "0.18.7"
-  resolved "https://registry.npmjs.org/ipfs-repo/-/ipfs-repo-0.18.7.tgz#a25b00d5f03437f313f10085bd181b1182a76502"
-  dependencies:
-    async "^2.6.0"
-    base32.js "~0.1.0"
-    big.js "^5.0.3"
-    cids "~0.5.2"
-    datastore-core "~0.4.0"
-    datastore-fs "~0.4.2"
-    datastore-level "~0.7.0"
-    debug "^3.1.0"
-    interface-datastore "~0.4.2"
-    ipfs-block "~0.6.1"
-    level-js timkuijsten/level.js#idbunwrapper
-    leveldown "^1.7.2"
-    lock-me "^1.0.3"
-    lodash.get "^4.4.2"
-    lodash.has "^4.5.2"
-    lodash.set "^4.3.2"
-    multiaddr "^3.0.1"
-    pull-stream "^3.6.1"
-
-ipfs-repo@~0.19.0:
-  version "0.19.0"
-  resolved "https://registry.npmjs.org/ipfs-repo/-/ipfs-repo-0.19.0.tgz#8f3d883359b860367644b542723cc1a5f5f5b317"
+ipfs-repo@^0.x, ipfs-repo@~0.20.0:
+  version "0.20.0"
+  resolved "https://registry.npmjs.org/ipfs-repo/-/ipfs-repo-0.20.0.tgz#90f2378f209710431662e652aa2a383e35127289"
   dependencies:
     async "^2.6.0"
     base32.js "~0.1.0"
@@ -2966,9 +2943,9 @@ ipfs-repo@~0.19.0:
     multiaddr "^4.0.0"
     pull-stream "^3.6.7"
 
-ipfs-repo@~0.20.0:
-  version "0.20.0"
-  resolved "https://registry.npmjs.org/ipfs-repo/-/ipfs-repo-0.20.0.tgz#90f2378f209710431662e652aa2a383e35127289"
+ipfs-repo@~0.19.0:
+  version "0.19.0"
+  resolved "https://registry.npmjs.org/ipfs-repo/-/ipfs-repo-0.19.0.tgz#8f3d883359b860367644b542723cc1a5f5f5b317"
   dependencies:
     async "^2.6.0"
     base32.js "~0.1.0"
@@ -4994,17 +4971,6 @@ moving-average@^1.0.0:
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
-
-multiaddr@^3.0.1:
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/multiaddr/-/multiaddr-3.1.0.tgz#44a92305ed27a0e3f53e0e14545915e8e8571bfa"
-  dependencies:
-    bs58 "^4.0.1"
-    ip "^1.1.5"
-    lodash.filter "^4.6.0"
-    lodash.map "^4.6.0"
-    varint "^5.0.0"
-    xtend "^4.0.1"
 
 multiaddr@^4.0.0:
   version "4.0.0"

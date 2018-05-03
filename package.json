@@ -7,7 +7,7 @@
     "libp2p-webrtc-star": "git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#allow-simple-peers-options-v0.14.0",
     "ipfs-pubsub-room": "git+https://github.com/cloudy-db/ipfs-pubsub-room.git#patch-for-new-ipfs",
     "ipfs": "git+https://github.com/ipfs/js-ipfs.git#3019fc0",
-    "ipfs-repo": "^0.18.7",
+    "ipfs-repo": "^0.x",
     "jest": "^22.4.3",
     "mocha": "^5.0.5",
     "orbit-db": "^0.19.7",
