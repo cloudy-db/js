@@ -45,14 +45,14 @@ const WStar = require("libp2p-webrtc-star");
 
 /**
   * helper method to create an IPFS instance based on user-supplied params
-  * @param {Object} ipfsOrOptions options to be passed to IPFS constructor
+  * @param {Object|undefined} ipfsOrOptions options to be passed to IPFS constructor
   * @returns {Promise<IPFS>}
   */
-function initIpfsInstance(ipfsOrOptions) {
+function initIpfsInstance(ipfsOrOptions, ipfsStorage) {
 	return new Promise((resolve, reject) => {
 		const wstar = new WStar({ wrtc: wrtc, spOptions: spOptions });
 		ipfsOrOptions = Object.assign({
-			repo: new IPFSRepo("./storage/ipfs-repo"),
+			repo: new IPFSRepo(ipfsStorage || "./storage/ipfs-repo"),
 			config: {
 				Addresses: {
 					Swarm: [
@@ -99,33 +99,39 @@ function initIpfsInstance(ipfsOrOptions) {
 class Cloudy extends EventEmitter {
 
 	/**
-	 * @param {IPFS|Object} ipfsOrOptions ready-ed IPFS instance OR an object which will be passed to the IPFS constructor
-	 * @param {string} [directory]
-	 * @param {?string} [namespace] database address for syncing devices. null for new Cloudy database
-	 * @param {string} [deviceId] unique device ID -- should be SAME each time user invokes the app
-	 * @param {Function} [wakeupFunction] a function to wake up the device for syncing. return a promise to pause the sync
-	 * @param {Object} [storeDefaults] default options for stores 
-	 * @param {*} [options] options to pass to OrbitDB constructor
+	 * @typedef {Object} CloudyOptions
+	 * @property {IPFS|Object} [ipfsOrOptions] - ready-ed IPFS instance OR an object which will be passed to the IPFS constructor
+	 * @property {Object} [orbitDbOptions] - options to pass to OrbitDB constructor
+	 * @property {string} [orbitDbStorage] - directory for OrbitDB
+	 * @property {string} [ipfsStorage] - directory for IPFS
+	 * @property {?string} [namespace] - database address for syncing devices. falsy for new Cloudy database
+	 * @property {string} [deviceId] - unique device ID -- should be SAME each time user invokes the app
+	 * @property {Function} [wakeupFunction] - a function to wake up the device for syncing. return a promise to pause the sync
+	 * @property {Object} [storeDefaults] - default options for stores 
 	 */
-	constructor(ipfsOrOptions = {}, directory = "./storage/orbitdb", namespace, deviceId, wakeupFunction, storeDefaults, options) {
+
+	/**
+	 * @param {CloudyOptions} options
+	 */
+	constructor(options = {}) {
 		super();
 
 		/** @type {Object} default options for stores  */
-		this.storeDefaults = Object.assign(namespace === null ? {sync: false} : {sync: true}, {admin: ["*"], write: ["*"]}, storeDefaults);
-		this.namespace = namespace || uuid();
+		this.storeDefaults = Object.assign(options.namespace ? {sync: false} : {sync: true}, {admin: ["*"], write: ["*"]}, options.storeDefaults);
+		this.namespace = options.namespace || uuid();
 
-		if (ipfsOrOptions._libp2pNode) {
-			this.ipfs = ipfsOrOptions;
+		if (options.ipfsOrOptions && options.ipfsOrOptions._libp2pNode) {
+			this.ipfs = options.ipfsOrOptions;
 		}
 		(async () => {
 			try {
 				if (!this.ipfs) {
-					this.ipfs = await initIpfsInstance(ipfsOrOptions);
+					this.ipfs = await initIpfsInstance(options.ipfsOrOptions, options.ipfsStorage);
 				}
 	
 				/** @type {OrbitDB} */
 				// @ts-ignore
-				this.orbitDb = new OrbitDB(this.ipfs, directory, options);
+				this.orbitDb = new OrbitDB(this.ipfs, options.orbitDbStorage || "./storage/orbitdb", options.orbitDbOptions);
 				/* const optsForDevicesDb = {admin: ["*"], write: ["*"]};
 				this.orbitDb.docstore("devices", optsForDevicesDb).then((store) => {
 					/** @type {DocumentStore} 
@@ -142,18 +148,12 @@ class Cloudy extends EventEmitter {
 
 	/**
 	 * Short hand to create a Cloudy instance.
-	 * @param {IPFS|Object} ipfsOrOptions ready-ed IPFS instance OR an object which will be passed to the IPFS constructor
-	 * @param {string} [directory]
-	 * @param {?string} [namespace] database address for syncing devices. null for new Cloudy database
-	 * @param {string} [deviceId] unique device ID -- should be SAME each time user invokes the app
-	 * @param {Function} [wakeupFunction] a function to wake up the device for syncing. return a promise to pause the sync
-	 * @param {Object} [storeDefaults] default options for stores 
-	 * @param {*} [options] options to pass to OrbitDB constructor
+	 * @param {CloudyOptions} options
 	 * @return {Promise<Cloudy>} - Cloudy instance 
 	 */
-	static create(ipfsOrOptions, directory, namespace, deviceId, wakeupFunction, storeDefaults, options) {
+	static create(options) {
 		return new Promise((resolve, reject) => {
-			const cloudy = new Cloudy(ipfsOrOptions, directory, namespace, deviceId, wakeupFunction, storeDefaults, options);
+			const cloudy = new Cloudy(options);
 			cloudy.once("ready", () => {
 				resolve(cloudy);
 			});

@@ -43,19 +43,16 @@ class RunNumber extends EventEmitter {
 	}
 
 	/**
-	 * @param {?string} [namespace] database address for syncing devices. null for new Cloudy database
+	 * @param {Object} cloudyOptions
 	 * @param {Object} storeOptions
-	 * @param {...*} args options to pass to Cloudy.create
-	 * @returns {Promise<RunNumber>}
+	 * @returns {Promise<RunNumber>} Ready'd RunNumber instance
 	 */
-	static async create(namespace, storeOptions = {}, ...args) {
-		args[2] = namespace;
-		// @ts-ignore
-		const cloudy = await Cloudy.create(...args);
+	static async create(cloudyOptions, storeOptions) {
+		const cloudy = await Cloudy.create(cloudyOptions);
 		const db = await cloudy.store("runNumber", storeOptions);
 		await db.load();
-		const calendar = new RunNumber(cloudy, db);
-		return calendar;
+		const runNumber = new RunNumber(cloudy, db);
+		return runNumber;
 	}
 
 	/**

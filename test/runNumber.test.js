@@ -39,16 +39,20 @@ describe("The RunNumber class", function() {
 	
 	before(async () => {
 		const name = "test" + Math.floor(Math.random() * 1000000);
-		instance1 = await RunNumber.create(null, undefined, {
-			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance1"),
-		}, "./storage/orbitdb1");
+		instance1 = await RunNumber.create({
+			ipfsStorage: "./storage/ipfs-repo-for-test-instance1",
+			orbitDbStorage: "./storage/orbitdb1",
+			namespace: undefined,
+		});
 
 
 		await sleep(3600);
 		console.log("now instance2");
-		instance2 = await RunNumber.create(instance1.namespace, undefined, {
-			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance2"),
-		}, "./storage/orbitdb2");
+		instance2 = await RunNumber.create({
+			ipfsStorage: "./storage/ipfs-repo-for-test-instance2",
+			orbitDbStorage: "./storage/orbitdb2",
+			namespace: instance1.namespace,
+		});
 
 		console.log("initialized 2 instances");
 
