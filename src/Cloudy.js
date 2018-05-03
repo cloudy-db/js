@@ -83,7 +83,7 @@ function initIpfsInstance(ipfsOrOptions) {
 		});
 		ipfs.on("ready", async () => {
 			ipfs._libp2pNode.on("peer:discovery", (peer) => {
-				console.log("Discovered:", peer.id.toB58String());
+				console.debug("Discovered:", peer.id.toB58String());
 			});
 			ipfs._libp2pNode.on("peer:connect", (peer) => {
 				console.log("Connection established to:", peer.id.toB58String());

@@ -1,13 +1,13 @@
-const Calendar = require("../src/Calendar");
-const Event = require("../src/pojo/CalendarEvent");
+const RunNumber = require("../src/RunNumber");
 const IPFSRepo = require('ipfs-repo')
 const sleep = require("await-sleep");
 const assert = require("chai").assert;
-  
+const uuid = require("uuid/v4");
+const omit = require("lodash/omit");
 
 /**
  * utility helper for waiting for database sync
- * @param {Calendar} calendar
+ * @param {RunNumber} calendar
  * @returns {Promise<>} a prmoise that resolves when `replicated` event is emitted
  */ 
 function waitTillReplicated(calendar) {
@@ -31,22 +31,22 @@ function deleteAll(instance) {
 	return Promise.all(all);
 }
 
-describe("The Calendar class", function() {
-	/** @type {Calendar} */
+describe("The RunNumber class", function() {
+	/** @type {RunNumber} */
 	let instance1;
-	/** @type {Calendar} */
+	/** @type {RunNumber} */
 	let instance2;
 	
 	before(async () => {
 		const name = "test" + Math.floor(Math.random() * 1000000);
-		instance1 = await Calendar.create(null, undefined, {
+		instance1 = await RunNumber.create(null, undefined, {
 			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance1"),
 		}, "./storage/orbitdb1");
 
 
 		await sleep(3600);
 		console.log("now instance2");
-		instance2 = await Calendar.create(instance1.namespace, undefined, {
+		instance2 = await RunNumber.create(instance1.namespace, undefined, {
 			repo: new IPFSRepo("./storage/ipfs-repo-for-test-instance2"),
 		}, "./storage/orbitdb2");
 
@@ -58,31 +58,30 @@ describe("The Calendar class", function() {
 	});
 
 	it("allows people to create events", async function() {
-		const date = new Date();
-		const event = new Event(date, "test only haha");
-		await instance1.addEvent(event);
+
+		const bill = {amount: 12345, currency: uuid(), time: new Date(), name: "Isaac"};
+		await instance1.addBill(bill);
 		await waitTillReplicated(instance2);
-		const results = instance2.query((eventObj) => eventObj.name === "test only haha");
+		const results = instance2.query((billObj) => billObj.currency === bill.currency);
 		assert.lengthOf(results, 1);
 		assert.isOk(results[0]._id);
-		assert.deepOwnInclude(results[0], {name: "test only haha", date: date});
+		assert.deepOwnInclude(results[0], omit(bill, ["time"]));
 	});
 
 	it("allows people to override events", async function() {
-		const date = new Date();
-		const event = new Event(date, "test jar haha");
-		await instance1.addEvent(event);
+		const bill1 = {amount: 12345, currency: uuid(), time: new Date(), name: "Isaac"};
+		await instance1.addBill(bill1);
 		await waitTillReplicated(instance2);
-		const results = instance2.query((eventObj) => eventObj.name === "test jar haha");
-		assert.lengthOf(results, 1);
-		assert.isOk(results[0]._id);
-		assert.deepOwnInclude(results[0], {name: "test jar haha", date: date});
+		const results1 = instance2.query((billObj) => billObj.currency === bill1.currency);
+		assert.lengthOf(results1, 1);
+		assert.isOk(results1[0]._id);
+		assert.deepOwnInclude(results1[0], omit(bill1, ["time"]));
 
-		await instance2.addEvent(Object.assign({}, event, {name: "test 1234"}));
+		await instance2.addBill(Object.assign({}, bill1, {currency: "fun"}));
 		await waitTillReplicated(instance1);
-		const results2 = instance1.query((eventObj) => eventObj._id == event._id);
+		const results2 = instance1.query((billObj) => billObj._id === bill1._id);
 		assert.lengthOf(results2, 1);
 		assert.isOk(results2[0]._id);
-		assert.deepOwnInclude(results2[0], {name: "test 1234", date: date});
+		assert.deepOwnInclude(results2[0], omit({...bill1, currency: "fun"}, ["time"]));
 	});
 });
