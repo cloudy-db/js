@@ -31,10 +31,11 @@ describe("The RunNumberStreamify class", function() {
 	});
 
 	it("returns existing activities", function(done) {
-		const activities = instance1.activities;
+		const activities = instance1.activities$;
 		activities.subscribe({
 			next: console.log.bind(console),
-			complete: () => {done();}
+			// complete: () => {done();}
 		});
+		setTimeout(() => done(), 4000);
 	});
 });

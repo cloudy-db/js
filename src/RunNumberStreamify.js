@@ -1,7 +1,7 @@
 const RunNumber = require("./RunNumber");
-const Observable = require('rxjs').Observable;
-const BehaviorSubject = require('rxjs').BehaviorSubject;
-const Subject = require('rxjs').Subject;
+const { Observable, BehaviorSubject, Subject } = require("rxjs");
+const { multicast, refCount, tap, map } = require("rxjs/operators");
+const orderBy = require("lodash/orderBy");
 
 // const Rx = require('rxjs/Rx');
 
@@ -16,14 +16,27 @@ class RunNumberStreamify extends RunNumber {
 
 		/** @type {Observable} */
 		this.activities$ = Observable.create((observer) => {
-			const updateNext = observer.next(this.query());
+			const updateNext = () => {observer.next(this.query());}
 			updateNext();
-			this.on("replicated", updateNext);
+			this.on("replicated", () => {
+				updateNext();
+				console.log("updated2 - replicated event");
+			});
+			this.on("write", () => {
+				updateNext();
+				console.log("updated1 - write event");
+			});
 
 			return function completed() {
+				console.log("Completed activities$");
 				this.removeListener("replicated", updateNext);
 			}
-		}).multicast(BehaviorSubject.create()).refCount();
+		}).pipe(
+			map((arr) => orderBy(arr, 'time', 'desc')),
+			tap((val) => {console.log("from source", val);}),
+			multicast(new BehaviorSubject([])),
+			refCount(),
+		);
 	}
 
 	/**
