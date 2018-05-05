@@ -33,14 +33,18 @@ function mapDates(bill) {
  * See {@link http://tutorials.jenkov.com/java-persistence/dao-design-pattern.html}
  */
 class RunNumber extends EventEmitter {
+	/**
+	 * @param {Cloudy} cloudy - ready Cloudy instance
+	 * @param {DocumentStore} db - fully initialized DB instance
+	 */
 	constructor(cloudy, db) {
 		super();
 		/** @type {Cloudy} */
 		this.cloudy = cloudy;
 		/** @type {DocumentStore} */
 		this.db = db;
-
-		reemit(this.db.events, this, ["replicated", "replicate", "replicate.progress", "load", "load.progress", "ready", "write"]);
+		/** @type {Function} */
+		this._reemit = reemit(this.db.events, this, ["replicated", "replicate", "replicate.progress", "load", "load.progress", "ready", "write"]);
 	}
 
 	/**
