@@ -20,7 +20,7 @@ function mapDates(bill) {
 /**
  * A bill
  * @typedef {Object} Bill
- * @property {string} amount - Amount, in decimals (e.g. HK$100.23 is 10023)
+ * @property {number} amount - Amount, in decimals (e.g. HK$100.23 is 10023)
  * @property {string} currency - ISO 4217 currency code (e.g. CNY for Renmibi)
  * @property {Date} time - The time
  * @property {string} name - user who paid (e.g. Isaac)
@@ -69,6 +69,9 @@ class RunNumber extends EventEmitter {
 		if (!bill._id) {
 			bill._id = uuid();
 		}
+		if (!bill.time) {
+			bill.time = new Date();
+		}
 		await this.db.put(bill);
 		return bill;
 	}
@@ -80,6 +83,29 @@ class RunNumber extends EventEmitter {
 	 */
 	query(filter = (() => true)) {
 		return this.db.query(filter).map(mapDates);
+	}
+
+	/**
+	 * @param {string} key
+	 * @returns {Promise<Bill>}
+	 */
+	del(key) {
+		return this.db.del(key);
+	}
+
+	/**
+	 * @param {string} key
+	 * @returns {Bill}
+	 */
+	get(key) {
+		const vals = this.db.get(key)
+		if (vals.length === 0) {
+			throw new Error("Not found");
+		}
+		if (vals.length !== 1) {
+			throw new Error(`Undefined State: get() returned ${vals.length} values`);
+		}
+		return vals[0];
 	}
 
 	get address() {
