@@ -87,7 +87,7 @@ class RunNumber extends EventEmitter {
 
 	/**
 	 * @param {string} key
-	 * @returns {Promise<Bill>}
+	 * @returns {Promise<any>}
 	 */
 	del(key) {
 		return this.db.del(key);
@@ -105,7 +105,7 @@ class RunNumber extends EventEmitter {
 		if (vals.length !== 1) {
 			throw new Error(`Undefined State: get() returned ${vals.length} values`);
 		}
-		return vals.map(mapDates)[0];
+		return mapDates(vals[0]);
 	}
 
 	get address() {
