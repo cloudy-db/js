@@ -105,7 +105,7 @@ class RunNumber extends EventEmitter {
 		if (vals.length !== 1) {
 			throw new Error(`Undefined State: get() returned ${vals.length} values`);
 		}
-		return vals[0];
+		return vals.map(mapDates)[0];
 	}
 
 	get address() {
