@@ -4,11 +4,11 @@
   "main": "src/index.js",
   "dependencies": {
     "chai": "^4.1.2",
+    "libp2p-webrtc-star": "git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#allow-simple-peers-options-v0.14.0",
     "ipfs": "git+https://github.com/ipfs/js-ipfs.git#3019fc0",
     "ipfs-pubsub-room": "git+https://github.com/cloudy-db/ipfs-pubsub-room.git#patch-for-new-ipfs",
     "ipfs-repo": "^0.x",
     "jest": "^22.4.3",
-    "libp2p-webrtc-star": "git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#allow-simple-peers-options-v0.14.0",
     "mocha": "^5.0.5",
     "orbit-db": "^0.19.7",
     "re-emitter": "^1.1.3",
@@ -16,11 +16,8 @@
     "uuid": "^3.2.1",
     "wrtc": "0.1.1"
   },
-  "scripts": {
-    "test": "nyc mocha",
-    "lint": "eslint src/**",
-    "typescript": "tsc",
-    "jsdoc": "jsdoc src/**"
+  "peerDependencies": {
+    "wrtc": "0.1.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.108",
@@ -31,6 +28,12 @@
     "lodash": "^4.17.10",
     "nyc": "^11.7.1",
     "typescript": "^2.8.1"
+  },
+  "scripts": {
+    "test": "nyc mocha",
+    "lint": "eslint src/**",
+    "typescript": "tsc",
+    "jsdoc": "jsdoc src/**"
   },
   "engines": {
     "node": "^9.9.0"

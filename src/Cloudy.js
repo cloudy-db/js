@@ -25,11 +25,12 @@ const spOptions = {
 
 const notBrowser = (typeof self === "undefined");
 let wrtc;
-if (notBrowser) {
-	wrtc = require("wrtc");
+
+// @ts-ignore
+if (window.RTCPeerConnection) {
+	console.debug("Using browser's WebRTC implementation");
 } else {
-	console.error("Browser not implemented -- proceed with caution");
-	// throw new Error("Browser not implemented");
+	wrtc = require("wrtc");
 }
 const WStar = require("libp2p-webrtc-star");
 
