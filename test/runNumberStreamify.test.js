@@ -9,8 +9,8 @@ describe("The RunNumberStreamify class", function() {
 	before(async () => {
 		const name = "test" + Math.floor(Math.random() * 1000000);
 		instance1 = await RunNumberStreamify.create({
-			ipfsStorage: "./storage/ipfs-repo-for-test-instance1",
-			orbitDbStorage: "./storage/orbitdb1",
+			ipfsStorage: "./storage/ipfs-repo-for-test-instance3",
+			orbitDbStorage: "./storage/orbitdb3",
 			namespace: undefined,
 		});
 
@@ -32,10 +32,15 @@ describe("The RunNumberStreamify class", function() {
 
 	it("returns existing activities", function(done) {
 		const activities = instance1.activities$;
-		activities.subscribe({
-			next: console.log.bind(console),
-			// complete: () => {done();}
+		let hasCalled = false;
+		const subscription = activities.subscribe({
+			next: function(val) {
+				console.log("next: ", val);
+			},
+			complete: () => {done();}
 		});
-		setTimeout(() => done(), 4000);
+		setTimeout(() => {
+			subscription.complete();
+		}, 4000);
 	});
 });

@@ -31,6 +31,17 @@ function deleteAll(instance) {
 	return Promise.all(all);
 }
 
+function once(fn) {
+    var returnValue, called = false;
+    return function () {
+        if (!called) {
+            called = true;
+            returnValue = fn.apply(this, arguments);
+        }
+        return returnValue;
+    };
+}
+
 describe("The RunNumber class", function() {
 	/** @type {RunNumber} */
 	let instance1;
@@ -38,7 +49,6 @@ describe("The RunNumber class", function() {
 	let instance2;
 	
 	before(async () => {
-		const name = "test" + Math.floor(Math.random() * 1000000);
 		instance1 = await RunNumber.create({
 			ipfsStorage: "./storage/ipfs-repo-for-test-instance1",
 			orbitDbStorage: "./storage/orbitdb1",
@@ -88,4 +98,30 @@ describe("The RunNumber class", function() {
 		assert.isOk(results2[0]._id);
 		assert.deepOwnInclude(results2[0], omit({...bill1, currency: "fun"}, ["time"]));
 	});
+
+	it("uses the injected wrtc implementation", function(done) {
+		const cb = once(done);
+
+		const wrtc = require("wrtc");
+
+		class RTCPeerConnection extends wrtc.RTCPeerConnection {
+			constructor() {
+				cb();
+				super(...Array.from(arguments));
+			}
+		}
+
+		const fakeRtc = {
+			RTCPeerConnection: RTCPeerConnection,
+			RTCSessionDescription: wrtc.RTCSessionDescription,
+			RTCIceCandidate: wrtc.RTCIceCandidate,
+		};
+
+		RunNumber.create({
+			ipfsStorage: "./storage/ipfs-repo-for-test-instance4",
+			orbitDbStorage: "./storage/orbitdb4",
+			namespace: undefined,
+			wrtc: fakeRtc,
+		});
+	}).timeout(10000);
 });

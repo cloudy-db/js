@@ -23,16 +23,41 @@ const spOptions = {
 	}
 };
 
-const notBrowser = (typeof self === "undefined");
-let wrtc;
+const notBrowser = (typeof self === "undefined"); // this field hopefully matches the behaviour of https://github.com/defunctzombie/package-browser-field-spec
 
-// @ts-ignore
-if (window.RTCPeerConnection) {
-	console.debug("Using browser's WebRTC implementation");
-} else {
-	wrtc = require("wrtc");
+function getLibp2pInject(wrtc) {
+	if (!notBrowser) {
+		return undefined;
+	}
+
+	if (wrtc) {
+		// console.debug("Using injected wrtc");
+	// @ts-ignore
+	} else if (typeof global.RTCPeerConnection !== "undefined" && typeof global.RTCSessionDescription !== "undefined" && typeof global.RTCIceCandidate !== "undefined") {
+		console.debug("Using 'global' scope WebRTC implementation");
+		wrtc = {
+			// @ts-ignore
+			RTCPeerConnection: global.RTCPeerConnection,
+			// @ts-ignore
+			RTCSessionDescription: global.RTCSessionDescription,
+			// @ts-ignore
+			RTCIceCandidate: global.RTCIceCandidate,
+		};
+	} else {
+		wrtc = require("wrtc");
+	}
+
+	const WStar = require("libp2p-webrtc-star");
+	const wstar = new WStar({ wrtc: wrtc, spOptions: spOptions });
+	return {
+		libp2p: {
+			modules: {
+				transport: [wstar],
+				discovery: [wstar.discovery],
+			}
+		},
+	};
 }
-const WStar = require("libp2p-webrtc-star");
 
 /** @typedef {*} IPFS */
 /** @typedef {*} DocumentStore */
@@ -49,9 +74,8 @@ const WStar = require("libp2p-webrtc-star");
   * @param {Object|undefined} ipfsOrOptions options to be passed to IPFS constructor
   * @returns {Promise<IPFS>}
   */
-function initIpfsInstance(ipfsOrOptions, ipfsStorage) {
+function initIpfsInstance(ipfsOrOptions, ipfsStorage, wrtc) {
 	return new Promise((resolve, reject) => {
-		const wstar = new WStar({ wrtc: wrtc, spOptions: spOptions });
 		ipfsOrOptions = Object.assign({
 			repo: new IPFSRepo(ipfsStorage || "./storage/ipfs-repo"),
 			config: {
@@ -66,14 +90,7 @@ function initIpfsInstance(ipfsOrOptions, ipfsStorage) {
 				},
 				Bootstrap: [],
 			}
-		}, ipfsOrOptions, notBrowser ? {
-			libp2p: {
-				modules: {
-					transport: [wstar],
-					discovery: [wstar.discovery],
-				}
-			},
-		} : undefined);
+		}, ipfsOrOptions, getLibp2pInject(wrtc));
 		const ipfs = new IPFS(Object.assign({EXPERIMENTAL: {
 			pubsub: true,
 		}}, ipfsOrOptions));
@@ -109,6 +126,7 @@ class Cloudy extends EventEmitter {
 	 * @property {string} [deviceId] - unique device ID -- should be SAME each time user invokes the app
 	 * @property {Function} [wakeupFunction] - a function to wake up the device for syncing. return a promise to pause the sync
 	 * @property {Object} [storeDefaults] - default options for stores 
+	 * @property {Object} [wrtc] - WebRTC implementation following the interface at https://github.com/substack/get-browser-rtc/blob/master/index.js
 	 */
 
 	/**
@@ -127,7 +145,7 @@ class Cloudy extends EventEmitter {
 		(async () => {
 			try {
 				if (!this.ipfs) {
-					this.ipfs = await initIpfsInstance(options.ipfsOrOptions, options.ipfsStorage);
+					this.ipfs = await initIpfsInstance(options.ipfsOrOptions, options.ipfsStorage, options.wrtc);
 				}
 	
 				/** @type {OrbitDB} */
