@@ -98,7 +98,7 @@ class RunNumber extends EventEmitter {
 	 * @returns {Bill}
 	 */
 	get(key) {
-		const vals = this.db.get(key)
+		const vals = this.db.get(key);
 		if (vals.length === 0) {
 			throw new Error("Not found");
 		}

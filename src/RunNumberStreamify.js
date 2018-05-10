@@ -1,7 +1,7 @@
 const RunNumber = require("./RunNumber");
 const Cloudy = require("./Cloudy");
-const { Observable, BehaviorSubject, Subject } = require("rxjs");
-const { multicast, refCount, tap, map } = require("rxjs/operators");
+const { Observable, BehaviorSubject } = require("rxjs");
+const { multicast, refCount, map } = require("rxjs/operators");
 const orderBy = require("lodash/orderBy");
 
 // const Rx = require('rxjs/Rx');
@@ -17,7 +17,7 @@ class RunNumberStreamify extends RunNumber {
 
 		/** @type {Observable} */
 		this.activities$ = Observable.create((observer) => {
-			const updateNext = () => {observer.next(this.query());}
+			const updateNext = () => {observer.next(this.query());};
 			updateNext();
 			this.on("replicated", () => {
 				updateNext();
@@ -31,7 +31,7 @@ class RunNumberStreamify extends RunNumber {
 			return () => { // complete function
 				console.log("Completed activities$");
 				this.removeListener("replicated", updateNext);
-			}
+			};
 		}).pipe(
 			map((arr) => orderBy(arr, "time", "desc")),
 			multicast(new BehaviorSubject([])), // necessary because of multi-threading for cancel listener
