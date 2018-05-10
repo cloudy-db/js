@@ -3,6 +3,7 @@ const OrbitDB = require("orbit-db");
 const IPFSRepo = require("ipfs-repo");
 const EventEmitter = require("events");
 const uuid = require("uuid/v4");
+const isFunction = require("lodash/isFunction");
 
 const spOptions = {
 	trickle: true,
@@ -151,12 +152,7 @@ class Cloudy extends EventEmitter {
 				/** @type {OrbitDB} */
 				// @ts-ignore
 				this.orbitDb = new OrbitDB(this.ipfs, options.orbitDbStorage || "./storage/orbitdb", options.orbitDbOptions);
-				/* const optsForDevicesDb = {admin: ["*"], write: ["*"]};
-				this.orbitDb.docstore("devices", optsForDevicesDb).then((store) => {
-					/** @type {DocumentStore} 
-					this.devices = store;
-					// store.
-				}); */
+				this._updateWakeupFunction(options.wakeupFunction, options.deviceId);
 	
 				this.emit("ready");
 			} catch (e) {
@@ -192,7 +188,9 @@ class Cloudy extends EventEmitter {
 		options = Object.assign({}, this.storeDefaults, options);
 		// nameOrAddress = nameOrAddress.toString().startsWith && nameOrAddress.toString().startsWith("/orbitdb/") ? nameOrAddress : `${this.namespace}/${nameOrAddress}`;
 		const db = await this.orbitDb.docs(this.namespace + "/" + nameOrAddress, options);
-		console.debug("Database address", db.address);
+		db.events.on("write", () => {
+			console.log("Write detected. Usually I'd wake up other devices, but because it's not impl-ed yet, I'm going to pretend that they are all awake :D");
+		});
 		return db;
 	}
 
@@ -201,6 +199,25 @@ class Cloudy extends EventEmitter {
 	 */
 	stop() {
 		return this.orbitDb.stop();
+	}
+
+	/**
+	 * internal function to update wakeup function
+	 * @param {Function} [func] - wake up function
+	 * @param {string} [deviceId] - unique ID for device
+	 */
+	_updateWakeupFunction(func, deviceId) {
+		/** @type {string} */
+		this.deviceId = deviceId;
+
+		this.store("devices").then(async (store) => {
+			/** @type {DocumentStore} */
+			this.devices = store;
+			if (isFunction(func)) {
+				await store.put({_id: deviceId, func: func.toString()});
+			}
+		});
+
 	}
 }
 
