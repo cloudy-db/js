@@ -188,10 +188,19 @@ class Cloudy extends EventEmitter {
 	 * @param {*} options
 	 * @returns {Promise<DocumentStore>}
 	 */
-	store(nameOrAddress, options = {}) {
+	async store(nameOrAddress, options = {}) {
 		options = Object.assign({}, this.storeDefaults, options);
 		// nameOrAddress = nameOrAddress.toString().startsWith && nameOrAddress.toString().startsWith("/orbitdb/") ? nameOrAddress : `${this.namespace}/${nameOrAddress}`;
-		return this.orbitDb.docs(nameOrAddress, options);
+		const db = await this.orbitDb.docs(this.namespace + "/" + nameOrAddress, options);
+		console.debug("Database address", db.address);
+		return db;
+	}
+
+	/**
+	 * stops the underlying OrbitDB instance
+	 */
+	stop() {
+		return this.orbitDb.stop();
 	}
 }
 
