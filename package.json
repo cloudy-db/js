@@ -4,9 +4,9 @@
   "main": "src/index.js",
   "dependencies": {
     "libp2p-webrtc-star": "git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#allow-simple-peers-options-v0.14.0",
-    "ipfs": "git+https://github.com/ipfs/js-ipfs.git#3019fc0",
-    "ipfs-pubsub-room": "git+https://github.com/cloudy-db/ipfs-pubsub-room.git#patch-for-new-ipfs",
-    "ipfs-repo": "^0.x",
+    "ipfs-repo": "https://github.com/cloudy-db/js-ipfs-repo.git#v0.20.0",
+    "ipfs": "git+https://github.com/ipfs/js-ipfs.git#de95989c3617f5a1c2ea8a376bc6cf525684edc6",
+    "ipfs-pubsub-room": "git+https://github.com/ipfs-shipyard/ipfs-pubsub-room.git#master",
     "jest": "^22.4.3",
     "orbit-db": "^0.19.7",
     "re-emitter": "^1.1.3",
