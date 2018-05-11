@@ -71,3 +71,6 @@ storage/
 
 # JSDoc Output
 out/
+
+# Webpack Output
+dist/
