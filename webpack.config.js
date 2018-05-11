@@ -3,40 +3,35 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
 	entry: "./src/index-reactnative.js",
+	mode: "production",
 	output: {
 		path: path.resolve(__dirname, "dist"),
 		filename: "bundle.js",
 		library: "cloudy",
-		libraryTarget: "umd",
+		libraryTarget: "commonjs2",
 	},
 	resolve: {
 		aliasFields: ["react-native", "browser"],
 	},
 	externals : {
-		"react-native" : {
-			commonjs: "react-native",
-			// root: "react-native",
-		}
+		"react-native" : "react-native",
 	},
 	devtool: "cheap-source-map",
 	optimization: {
-		minimizer: [
-			/*new UglifyJsPlugin({
-				cache: true,
-				parallel: true,
-				sourceMap: true,
-				uglifyOptions: {
-					safari10: false,
-					compress: {
-						inline: 0,
-					},
-					passes: 2,
-				},
-			}),*/
-		],
+		minimizer: [], // let downstream application minimize it
 	},
 	module: {
 		rules: [
+			{
+				test: /\.js$/,
+				exclude: /babel/,
+				loader: 'string-replace-loader',
+				options: {
+					search: "var _extends = Object\.assign \\|\\|",
+					replace: "var _extends =",
+					flags: "g",
+				}
+			},
 			{
 				test: /\.js$/,
 				exclude: /babel/,
@@ -46,8 +41,9 @@ module.exports = {
 						plugins: [require("babel-plugin-transform-object-assign")],
 						babelrc: false,
 					}
-				}
-			}
-		]
+				},
+			},
+		],
+
 	},	  
 };
