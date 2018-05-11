@@ -79,6 +79,7 @@ function initIpfsInstance(ipfsOrOptions, ipfsStorage, wrtc) {
 	return new Promise((resolve, reject) => {
 		ipfsOrOptions = Object.assign({
 			repo: new IPFSRepo(ipfsStorage || "./storage/ipfs-repo"),
+			init: true,
 			config: {
 				Addresses: {
 					Swarm: [
