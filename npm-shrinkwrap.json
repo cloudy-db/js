@@ -12154,10 +12154,10 @@
       }
     },
     "orbit-db-cache": {
-      "version": "0.2.3",
-      "resolved": "https://registry.npmjs.org/orbit-db-cache/-/orbit-db-cache-0.2.3.tgz",
-      "integrity": "sha512-b7ic6K1cc7N9x9jfiplL9TKA3b/eJUmvZE2CvdB2wX/sVE/zmLr2TOlnLjteeBQXmlop4jrnqy+PGl8bYHUPkA==",
+      "version": "git+https://github.com/cloudy-db/orbit-db-cache.git#2d06e3b5acd9341909af22958686d06a4f3768cf",
+      "from": "git+https://github.com/cloudy-db/orbit-db-cache.git#reactnative",
       "requires": {
+        "asyncstorage-down": "^4.0.1",
         "level-js": "~2.2.4",
         "leveldown": "^1.9.0",
         "logplease": "^1.2.14",
