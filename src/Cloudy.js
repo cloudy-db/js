@@ -92,10 +92,12 @@ function initIpfsInstance(ipfsOrOptions, ipfsStorage, wrtc) {
 				},
 				Bootstrap: [],
 			}
-		}, ipfsOrOptions, getLibp2pInject(wrtc));
-		const ipfs = new IPFS(Object.assign({EXPERIMENTAL: {
-			pubsub: true,
-		}}, ipfsOrOptions));
+		}, ipfsOrOptions, {
+			EXPERIMENTAL: {
+				pubsub: true,
+			}
+		}, getLibp2pInject(wrtc));
+		const ipfs = new IPFS(ipfsOrOptions);
 
 		ipfs.on("error", (e) => {
 			console.error("error in ipfs", e);
