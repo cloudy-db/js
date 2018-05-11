@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:9-stretch-browsers
+      - image: node:9
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -16,6 +16,9 @@ jobs:
 
     steps:
       - checkout
+
+      # Update NPM to v6 for `npm ci`
+      - run: npm install -g npm@latest
 
       # Download and cache dependencies
       - restore_cache:
@@ -32,12 +35,12 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
         
       # run tests!
-      - test: npm run test
+      - run: npm run test
 
-      - test: npm run eslint
+      - run: npm run lint
 
-      - test: npm run tsc
+      - run: npm run typescript
 
-      - test: npm run jsdoc
+      - run: npm run jsdoc
 
 
