@@ -32,7 +32,7 @@ module.exports = {
 			commonjs: "fs-ext",
 		},
 	},
-	devtool: "cheap-eval-source-map",
+	devtool: "inline-cheap-source-map",
 	optimization: {
 		minimizer: [],
 	},
@@ -48,6 +48,7 @@ module.exports = {
 						plugins: [],
 						babelrc: false,
 						cacheDirectory: true,
+						compact: false,
 					}
 				},
 			},

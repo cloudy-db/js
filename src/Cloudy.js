@@ -76,6 +76,7 @@ function getLibp2pInject(wrtc) {
   * @returns {Promise<IPFS>}
   */
 function initIpfsInstance(ipfsOrOptions, ipfsStorage, wrtc) {
+	console.debug("About to get an IPFS instance");
 	return new Promise((resolve, reject) => {
 		ipfsOrOptions = Object.assign({
 			repo: new IPFSRepo(ipfsStorage || "./storage/ipfs-repo"),
@@ -151,6 +152,7 @@ class Cloudy extends EventEmitter {
 				if (!this.ipfs) {
 					this.ipfs = await initIpfsInstance(options.ipfsOrOptions, options.ipfsStorage, options.wrtc);
 				}
+				console.debug("Great! We've got an IPFS instance already. Next: OrbitDB");
 	
 				/** @type {OrbitDB} */
 				// @ts-ignore
