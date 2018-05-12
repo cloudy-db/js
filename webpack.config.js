@@ -17,6 +17,7 @@ module.exports = {
 		alias: {
 			fs: "memfs",
 			inherits$: path.resolve(__dirname, "node_modules/inherits"),
+			debug$: "debug/src/browser.js",
 		},
 	},
 	externals : {
@@ -54,5 +55,6 @@ module.exports = {
 		dns: "empty",
 		"child_process": "empty",
 		console: false,
+		process: true,
 	}
 };
