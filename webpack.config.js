@@ -6,32 +6,38 @@ const objectAssignTransform = require("babel-plugin-transform-object-assign");
 const NodeSourcePlugin = require("webpack/lib/node/NodeSourcePlugin");
 
 module.exports = {
-	entry: ["babel-polyfill", "./src/index-reactnative.js"],
+	entry: ["babel-polyfill", "./dist/haha.js", "./src/index-reactnative.js"],
 	mode: "production",
-	target: "webworker",
 	output: {
 		path: path.resolve(__dirname, "dist"),
-		filename: "bundle2.js",
+		filename: "bundle1.js",
 		library: "cloudy",
 		libraryTarget: "commonjs2",
+		pathinfo: true,
 	},
 	resolve: {
-		aliasFields: ["react-native"],
+		aliasFields: ["react-native", "browser"],
 	},
 	externals : {
 		"react-native": "react-native",
+		"fs-ext": {
+			commonjs: "fs-ext",
+		},
 	},
 	devtool: "",
 	optimization: {
 		minimizer: [],
 	},
-	/*plugins: [
-		new MinifyPlugin({
+	plugins: [
+		/* new MinifyPlugin({
 			// minifyOpts
 		}, {
 			// pluginOpts
-		})
-	],*/
+		}), */
+		/* new webpack.ProvidePlugin({
+			"self": "self-crypto",
+		}), */
+	],
 	plugins: [
 		new webpack.DefinePlugin({
 			//"self": {}
@@ -65,4 +71,12 @@ module.exports = {
 		],
 
 	},
+	node: {
+		net: "mock",
+		fs: "empty",
+		tls: "empty",
+		dgram: "empty",
+		dns: "empty",
+		"child_process": "empty",
+	}
 };
