@@ -6,7 +6,7 @@ const objectAssignTransform = require("babel-plugin-transform-object-assign");
 const NodeSourcePlugin = require("webpack/lib/node/NodeSourcePlugin");
 
 module.exports = {
-	entry: ["babel-polyfill", "./dist/haha.js", "./src/index-reactnative.js"],
+	entry: ["babel-polyfill", "./haha.js", "./src/index-reactnative.js"],
 	mode: "production",
 	output: {
 		path: path.resolve(__dirname, "dist"),
