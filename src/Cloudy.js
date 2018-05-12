@@ -32,7 +32,7 @@ function getLibp2pInject(wrtc) {
 	}
 
 	if (wrtc) {
-		// console.debug("Using injected wrtc");
+		console.debug("Using injected wrtc");
 	// @ts-ignore
 	} else if (typeof global.RTCPeerConnection !== "undefined" && typeof global.RTCSessionDescription !== "undefined" && typeof global.RTCIceCandidate !== "undefined") {
 		console.debug("Using 'global' scope WebRTC implementation");
@@ -45,6 +45,7 @@ function getLibp2pInject(wrtc) {
 			RTCIceCandidate: global.RTCIceCandidate,
 		};
 	} else {
+		console.debug("Using bundled wrtc");
 		wrtc = require("wrtc");
 	}
 
@@ -139,6 +140,8 @@ class Cloudy extends EventEmitter {
 	 */
 	constructor(options = {}) {
 		super();
+
+		console.debug("Cloudy constructor called", arguments);
 
 		/** @type {Object} default options for stores  */
 		this.storeDefaults = Object.assign(options.namespace ? {sync: false} : {sync: true}, {admin: ["*"], write: ["*"]}, options.storeDefaults);
