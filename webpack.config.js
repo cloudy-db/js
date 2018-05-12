@@ -10,7 +10,7 @@ module.exports = {
 	mode: "production",
 	output: {
 		path: path.resolve(__dirname, "build"),
-		filename: "bundle3.js",
+		filename: "bundle.js",
 		library: "cloudy",
 		libraryTarget: "commonjs2",
 		pathinfo: true,

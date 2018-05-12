@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "src/index.js",
   "dependencies": {
-    "ipfs": "git+https://github.com/ipfs/js-ipfs.git#de95989c3617f5a1c2ea8a376bc6cf525684edc6",
+    "ipfs": "file:../js-ipfs",
     "ipfs-pubsub-room": "git+https://github.com/ipfs-shipyard/ipfs-pubsub-room.git#7a7b931",
     "ipfs-repo": "git+https://github.com/cloudy-db/js-ipfs-repo.git#reactnative",
     "jest": "^22.4.3",
