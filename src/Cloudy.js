@@ -49,6 +49,8 @@ function getLibp2pInject(wrtc) {
 		wrtc = require("wrtc");
 	}
 
+	console.debug("Here is the wrtc we're using", wrtc);
+
 	const WStar = require("libp2p-webrtc-star");
 	const wstar = new WStar({ wrtc: wrtc, spOptions: spOptions });
 	return {
@@ -160,6 +162,8 @@ class Cloudy extends EventEmitter {
 				/** @type {OrbitDB} */
 				// @ts-ignore
 				this.orbitDb = new OrbitDB(this.ipfs, options.orbitDbStorage || "./storage/orbitdb", options.orbitDbOptions);
+
+				console.debug("OrbitDB OK, next _updateWakeupFunction");
 				this._updateWakeupFunction(options.wakeupFunction, options.deviceId);
 	
 				this.emit("ready");
@@ -218,7 +222,7 @@ class Cloudy extends EventEmitter {
 		/** @type {string} */
 		this.deviceId = deviceId;
 
-		this.store("devices").then(async (store) => {
+		this.store("devices", {sync: false}).then(async (store) => {
 			/** @type {DocumentStore} */
 			this.devices = store;
 			if (isFunction(func)) {

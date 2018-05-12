@@ -73,3 +73,5 @@ storage/
 out/
 
 build/
+
+*.swp

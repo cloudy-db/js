@@ -9146,7 +9146,7 @@
       }
     },
     "ipfs-repo": {
-      "version": "git+https://github.com/cloudy-db/js-ipfs-repo.git#1fd46751707221ecd9205609bc0f0626c9f9549c",
+      "version": "git+https://github.com/cloudy-db/js-ipfs-repo.git#fb40e63801a81999ec71f4af057e836fc09b8277",
       "from": "git+https://github.com/cloudy-db/js-ipfs-repo.git#reactnative",
       "requires": {
         "async": "^2.6.0",
