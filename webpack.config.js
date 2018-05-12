@@ -6,7 +6,7 @@ const objectAssignTransform = require("babel-plugin-transform-object-assign");
 const NodeSourcePlugin = require("webpack/lib/node/NodeSourcePlugin");
 
 module.exports = {
-	entry: ["babel-polyfill", "./haha.js", "./src/index-reactnative.js"],
+	entry: ["babel-polyfill", "./src/index-reactnative.js"],
 	mode: "production",
 	output: {
 		path: path.resolve(__dirname, "dist"),
@@ -16,7 +16,11 @@ module.exports = {
 		pathinfo: true,
 	},
 	resolve: {
-		aliasFields: ["react-native", "browser"],
+		aliasFields: ["react-native"],
+		alias: {
+			"fs": "memfs",
+			"./node_modules/ipfs-repo/src/lock.js": "./node_modules/ipfs-repo/src/lock-memory.js",
+		},
 	},
 	externals : {
 		"react-native": "react-native",
@@ -73,7 +77,7 @@ module.exports = {
 	},
 	node: {
 		net: "mock",
-		fs: "empty",
+		// fs: "empty",
 		tls: "empty",
 		dgram: "empty",
 		dns: "empty",

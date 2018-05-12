@@ -5305,6 +5305,12 @@
       "resolved": "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-1.1.0.tgz",
       "integrity": "sha1-wFNHeBfIa1HaqFPIHgWbcz0CNhQ="
     },
+    "fast-extend": {
+      "version": "0.0.2",
+      "resolved": "https://registry.npmjs.org/fast-extend/-/fast-extend-0.0.2.tgz",
+      "integrity": "sha1-9exCz0C5Rg9SGmOH37Ut7u1nHb0=",
+      "dev": true
+    },
     "fast-future": {
       "version": "1.0.2",
       "resolved": "https://registry.npmjs.org/fast-future/-/fast-future-1.0.2.tgz",
@@ -6232,6 +6238,12 @@
       "requires": {
         "nan": "^2.0"
       }
+    },
+    "fs-monkey": {
+      "version": "0.3.2",
+      "resolved": "https://registry.npmjs.org/fs-monkey/-/fs-monkey-0.3.2.tgz",
+      "integrity": "sha512-zAIH28uC2w3oaSxQ+Qe7bofbChUhVht38gUmtKcR7Sb8Yqb7C9PVJTXStB5i9rTnjpJRSHkXLq/m2V4Cj2NDKw==",
+      "dev": true
     },
     "fs-write-stream-atomic": {
       "version": "1.0.10",
@@ -12521,6 +12533,16 @@
             "xtend": "~4.0.0"
           }
         }
+      }
+    },
+    "memfs": {
+      "version": "2.8.0",
+      "resolved": "https://registry.npmjs.org/memfs/-/memfs-2.8.0.tgz",
+      "integrity": "sha512-XT0mmVd8yB8n7TVGM7rhgxB4T76v+cFW64HUSAuueFzKs3SzWudoRMFHJxlqE1a1OZcu8+DA5fuV2BneEZcFIw==",
+      "dev": true,
+      "requires": {
+        "fast-extend": "0.0.2",
+        "fs-monkey": "^0.3.0"
       }
     },
     "memoizee": {
