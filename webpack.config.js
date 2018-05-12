@@ -1,19 +1,22 @@
 const path = require("path");
+const webpack = require("webpack");
 const MinifyPlugin = require("babel-minify-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const objectAssignTransform = require("babel-plugin-transform-object-assign");
+const NodeSourcePlugin = require("webpack/lib/node/NodeSourcePlugin");
 
 module.exports = {
 	entry: ["babel-polyfill", "./src/index-reactnative.js"],
 	mode: "production",
+	target: "webworker",
 	output: {
 		path: path.resolve(__dirname, "dist"),
-		filename: "bundle.js",
+		filename: "bundle2.js",
 		library: "cloudy",
 		libraryTarget: "commonjs2",
 	},
 	resolve: {
-		aliasFields: ["react-native", "browser"],
+		aliasFields: ["react-native"],
 	},
 	externals : {
 		"react-native": "react-native",
@@ -29,6 +32,11 @@ module.exports = {
 			// pluginOpts
 		})
 	],*/
+	plugins: [
+		new webpack.DefinePlugin({
+			//"self": {}
+		}),
+	],
 	module: {
 		rules: [
 			/*{
@@ -47,8 +55,8 @@ module.exports = {
 				use: {
 					loader: "babel-loader",
 					options: {
-						presets: ['react-native'],
-						plugins: [objectAssignTransform],
+						presets: ["react-native"],
+						plugins: [],
 						babelrc: false,
 						cacheDirectory: true,
 					}
