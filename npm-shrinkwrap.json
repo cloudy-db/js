@@ -10872,9 +10872,8 @@
       }
     },
     "memfs": {
-      "version": "2.8.0",
-      "resolved": "https://registry.npmjs.org/memfs/-/memfs-2.8.0.tgz",
-      "integrity": "sha512-XT0mmVd8yB8n7TVGM7rhgxB4T76v+cFW64HUSAuueFzKs3SzWudoRMFHJxlqE1a1OZcu8+DA5fuV2BneEZcFIw==",
+      "version": "git+https://github.com/cloudy-db/memfs.git#bd825be5646cedbae3d86dc5fbf7b3fd9ef838e8",
+      "from": "git+https://github.com/cloudy-db/memfs.git#lib2src",
       "dev": true,
       "requires": {
         "fast-extend": "0.0.2",
