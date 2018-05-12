@@ -1,5 +1,6 @@
 const path = require("path");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const MinifyPlugin = require("babel-minify-webpack-plugin");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
 	entry: "./src/index-reactnative.js",
@@ -14,12 +15,33 @@ module.exports = {
 		aliasFields: ["react-native", "browser"],
 	},
 	externals : {
-		"react-native" : "react-native",
+		"react-native": "react-native",
 	},
-	devtool: "cheap-source-map",
+	devtool: "",
 	optimization: {
-		minimizer: [], // let downstream application minimize it
+		minimizer: [
+			new UglifyJsPlugin({
+				cache: true,
+				parallel: true,
+				uglifyOptions: {
+					compress: {
+						inline: 0,
+						typeofs: false,
+
+					},
+					safari10: true,
+					ecma: 6,
+				}
+			}),
+		],
 	},
+	/*plugins: [
+		new MinifyPlugin({
+			// minifyOpts
+		}, {
+			// pluginOpts
+		})
+	],*/
 	module: {
 		rules: [
 			{
