@@ -1,16 +1,12 @@
 const path = require("path");
 const webpack = require("webpack");
-const MinifyPlugin = require("babel-minify-webpack-plugin");
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const objectAssignTransform = require("babel-plugin-transform-object-assign");
-const NodeSourcePlugin = require("webpack/lib/node/NodeSourcePlugin");
 
 module.exports = {
 	entry: ["babel-polyfill", "./src/index-reactnative.js"],
 	mode: "production",
 	output: {
-		path: path.resolve(__dirname, "dist"),
-		filename: "bundle1.js",
+		path: path.resolve(__dirname, "build"),
+		filename: "bundle.js",
 		library: "cloudy",
 		libraryTarget: "commonjs2",
 		pathinfo: true,
@@ -19,7 +15,6 @@ module.exports = {
 		aliasFields: ["react-native"],
 		alias: {
 			"fs": "memfs",
-			"./node_modules/ipfs-repo/src/lock.js": "./node_modules/ipfs-repo/src/lock-memory.js",
 		},
 	},
 	externals : {
@@ -32,33 +27,8 @@ module.exports = {
 	optimization: {
 		minimizer: [],
 	},
-	plugins: [
-		/* new MinifyPlugin({
-			// minifyOpts
-		}, {
-			// pluginOpts
-		}), */
-		/* new webpack.ProvidePlugin({
-			"self": "self-crypto",
-		}), */
-	],
-	plugins: [
-		new webpack.DefinePlugin({
-			//"self": {}
-		}),
-	],
 	module: {
 		rules: [
-			/*{
-				test: /\.js$/,
-				exclude: /babel/,
-				loader: 'string-replace-loader',
-				options: {
-					search: "var _extends = Object\.assign \\|\\|",
-					replace: "var _extends =",
-					flags: "g",
-				}
-			},*/
 			{
 				test: /\.js$/,
 				exclude: /babel/,
@@ -77,7 +47,6 @@ module.exports = {
 	},
 	node: {
 		net: "mock",
-		// fs: "empty",
 		tls: "empty",
 		dgram: "empty",
 		dns: "empty",
