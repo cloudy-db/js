@@ -43,7 +43,7 @@ jobs:
       - run: npm run webpack
 
       - store_artifacts:
-          path: dist/bundle.js
+          path: build/
           destination: webpack
 
       - run: npm run jsdoc
