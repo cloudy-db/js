@@ -1,0 +1,3 @@
+cd node_modules/core-js && npm i
+
+npm run grunt build:es6,es7,js,web,core -- --blacklist=es6.promise,es6.math,es6.object.create,es6.object.define-property,es6.object.define-properties,es6.function.bind,es6.array.is-array,es6.array.slice,es6.array.join,es6.array.index-of,es6.array.last-index-of,es6.array.every,es6.array.some,es6.array.for-each,es6.array.map,es6.array.filter,es6.array.reduce,es6.array.reduce-right,es6.array.sort,es6.date.now,es6.date.to-iso-string,es6.date.to-json,es6.date.to-primitive --library=off --path=custom

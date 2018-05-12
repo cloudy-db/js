@@ -2,7 +2,11 @@ const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
-	entry: ["babel-polyfill", "./src/index-reactnative.js"],
+	entry: [
+		// "./lib/core-js/custom.js",
+		"babel-polyfill",
+		"./src/index-reactnative.js",
+	],
 	mode: "production",
 	output: {
 		path: path.resolve(__dirname, "build"),
@@ -18,6 +22,8 @@ module.exports = {
 			fs: "memfs",
 			inherits$: path.resolve(__dirname, "node_modules/inherits"),
 			debug$: "debug/src/browser.js",
+			debug$: "debug/src/browser.js",
+			"create-hash$": "create-hash/browser.js",
 		},
 	},
 	externals : {
@@ -26,7 +32,7 @@ module.exports = {
 			commonjs: "fs-ext",
 		},
 	},
-	devtool: "",
+	devtool: "cheap-eval-source-map",
 	optimization: {
 		minimizer: [],
 	},
@@ -56,5 +62,6 @@ module.exports = {
 		"child_process": "empty",
 		console: false,
 		process: true,
+		crypto: true,
 	}
 };

@@ -1,0 +1,1 @@
+const compiled = require("../build/bundle");
