@@ -34,13 +34,20 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
         
-      # run tests!
       - run: npm run test
 
       - run: npm run lint
 
       - run: npm run typescript
 
+      - run: npm run webpack
+
+      - store_artifacts:
+          path: dist/bundle.js
+          destination: webpack
+
       - run: npm run jsdoc
-
-
+      
+      - store_artifacts:
+          path: out/
+          destination: jsdoc
