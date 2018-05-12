@@ -111,10 +111,24 @@ describe("The RunNumber class", function() {
 			}
 		}
 
+		class RTCSessionDescription extends wrtc.RTCSessionDescription {
+			constructor() {
+				cb();
+				super(...Array.from(arguments));
+			}
+		}
+
+		class RTCIceCandidate extends wrtc.RTCIceCandidate {
+			constructor() {
+				cb();
+				super(...Array.from(arguments));
+			}
+		}
+
 		const fakeRtc = {
 			RTCPeerConnection: RTCPeerConnection,
-			RTCSessionDescription: wrtc.RTCSessionDescription,
-			RTCIceCandidate: wrtc.RTCIceCandidate,
+			RTCSessionDescription: RTCSessionDescription,
+			RTCIceCandidate: RTCIceCandidate,
 		};
 
 		RunNumber.create({
