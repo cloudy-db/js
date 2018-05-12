@@ -6527,13 +6527,11 @@
         },
         "balanced-match": {
           "version": "1.0.0",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "brace-expansion": {
           "version": "1.1.11",
           "bundled": true,
-          "optional": true,
           "requires": {
             "balanced-match": "^1.0.0",
             "concat-map": "0.0.1"
@@ -6550,8 +6548,7 @@
         },
         "concat-map": {
           "version": "0.0.1",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "console-control-strings": {
           "version": "1.1.0",
@@ -8874,7 +8871,7 @@
       }
     },
     "ipfs": {
-      "version": "git+https://github.com/cloudy-db/js-ipfs.git#23ae7486b2be09dfe10b784f53eb48fd52d5324e",
+      "version": "git+https://github.com/cloudy-db/js-ipfs.git#66f75125c79a2977c2087b433d416d4be0dfc18a",
       "from": "git+https://github.com/cloudy-db/js-ipfs.git#reactnative",
       "requires": {
         "async": "^2.6.0",
