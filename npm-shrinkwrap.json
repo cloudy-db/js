@@ -10872,8 +10872,7 @@
       }
     },
     "memfs": {
-      "version": "git+https://github.com/cloudy-db/memfs.git#bd825be5646cedbae3d86dc5fbf7b3fd9ef838e8",
-      "from": "git+https://github.com/cloudy-db/memfs.git#lib2src",
+      "version": "file:lib/memfs",
       "dev": true,
       "requires": {
         "fast-extend": "0.0.2",
