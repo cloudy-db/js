@@ -1,9 +1,10 @@
 const path = require("path");
 const MinifyPlugin = require("babel-minify-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const objectAssignTransform = require("babel-plugin-transform-object-assign");
 
 module.exports = {
-	entry: "./src/index-reactnative.js",
+	entry: ["babel-polyfill", "./src/index-reactnative.js"],
 	mode: "production",
 	output: {
 		path: path.resolve(__dirname, "dist"),
@@ -19,21 +20,7 @@ module.exports = {
 	},
 	devtool: "",
 	optimization: {
-		minimizer: [
-			new UglifyJsPlugin({
-				cache: true,
-				parallel: true,
-				uglifyOptions: {
-					compress: {
-						inline: 0,
-						typeofs: false,
-
-					},
-					safari10: true,
-					ecma: 6,
-				}
-			}),
-		],
+		minimizer: [],
 	},
 	/*plugins: [
 		new MinifyPlugin({
@@ -44,7 +31,7 @@ module.exports = {
 	],*/
 	module: {
 		rules: [
-			{
+			/*{
 				test: /\.js$/,
 				exclude: /babel/,
 				loader: 'string-replace-loader',
@@ -53,19 +40,21 @@ module.exports = {
 					replace: "var _extends =",
 					flags: "g",
 				}
-			},
+			},*/
 			{
 				test: /\.js$/,
 				exclude: /babel/,
 				use: {
 					loader: "babel-loader",
 					options: {
-						plugins: [require("babel-plugin-transform-object-assign")],
+						presets: ['react-native'],
+						plugins: [objectAssignTransform],
 						babelrc: false,
+						cacheDirectory: true,
 					}
 				},
 			},
 		],
 
-	},	  
+	},
 };
