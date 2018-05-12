@@ -12,9 +12,11 @@ module.exports = {
 		pathinfo: true,
 	},
 	resolve: {
+		mainFields: ["react-native", "module", "main"],
 		aliasFields: ["react-native"],
 		alias: {
-			"fs": "memfs",
+			fs: "memfs",
+			inherits$: path.resolve(__dirname, "node_modules/inherits"),
 		},
 	},
 	externals : {
@@ -51,5 +53,6 @@ module.exports = {
 		dgram: "empty",
 		dns: "empty",
 		"child_process": "empty",
+		console: false,
 	}
 };
