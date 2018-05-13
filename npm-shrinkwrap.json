@@ -551,11 +551,6 @@
         }
       }
     },
-    "argsarray": {
-      "version": "0.0.1",
-      "resolved": "https://registry.npmjs.org/argsarray/-/argsarray-0.0.1.tgz",
-      "integrity": "sha1-bnIHtOzbObCviDA/pa4ivajfYcs="
-    },
     "arr-diff": {
       "version": "2.0.0",
       "resolved": "https://registry.npmjs.org/arr-diff/-/arr-diff-2.0.0.tgz",
@@ -670,28 +665,6 @@
       "version": "0.4.0",
       "resolved": "https://registry.npmjs.org/asynckit/-/asynckit-0.4.0.tgz",
       "integrity": "sha1-x57Zf380y48robyXkLzDZkdLS3k="
-    },
-    "asyncstorage-down": {
-      "version": "4.0.1",
-      "resolved": "https://registry.npmjs.org/asyncstorage-down/-/asyncstorage-down-4.0.1.tgz",
-      "integrity": "sha1-OAtISrYpqths1rcj4E8IwForAGc=",
-      "requires": {
-        "abstract-leveldown": "2.6.1",
-        "argsarray": "0.0.1",
-        "d64": "^1.0.0",
-        "ltgt": "^2.1.3",
-        "tiny-queue": "0.2.0"
-      },
-      "dependencies": {
-        "abstract-leveldown": {
-          "version": "2.6.1",
-          "resolved": "https://registry.npmjs.org/abstract-leveldown/-/abstract-leveldown-2.6.1.tgz",
-          "integrity": "sha1-+QFKVmm3RkGOFFFo3qSaBErhWQA=",
-          "requires": {
-            "xtend": "~4.0.0"
-          }
-        }
-      }
     },
     "atob": {
       "version": "2.1.1",
@@ -2023,11 +1996,6 @@
       "requires": {
         "cssom": "0.3.x"
       }
-    },
-    "d64": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/d64/-/d64-1.0.0.tgz",
-      "integrity": "sha1-QAKofoUMv8n52XBrYPymE6MzbpA="
     },
     "dashdash": {
       "version": "1.14.1",
@@ -5664,7 +5632,7 @@
     },
     "ipfs-pubsub-room": {
       "version": "git+https://github.com/ipfs-shipyard/ipfs-pubsub-room.git#7a7b9317d7e4ab995827c1b3adbf87153865c7f1",
-      "from": "git+https://github.com/ipfs-shipyard/ipfs-pubsub-room.git#master",
+      "from": "git+https://github.com/ipfs-shipyard/ipfs-pubsub-room.git#7a7b931",
       "requires": {
         "hyperdiff": "^2.0.3",
         "lodash.clonedeep": "^4.5.0",
@@ -5674,11 +5642,11 @@
       }
     },
     "ipfs-repo": {
-      "version": "git+https://github.com/cloudy-db/js-ipfs-repo.git#1fd46751707221ecd9205609bc0f0626c9f9549c",
-      "from": "git+https://github.com/cloudy-db/js-ipfs-repo.git#reactnative",
+      "version": "0.20.0",
+      "resolved": "https://registry.npmjs.org/ipfs-repo/-/ipfs-repo-0.20.0.tgz",
+      "integrity": "sha512-ipwAwj5EzcDU5OyNzfQLdKhTU6UcK3NMWAz9IngbqeKubMjl48392v47ENZqYyK5wgAG1uwTYLDF3QleGI6/WQ==",
       "requires": {
         "async": "^2.6.0",
-        "asyncstorage-down": "^4.0.1",
         "base32.js": "~0.1.0",
         "big.js": "^5.0.3",
         "cids": "~0.5.3",
@@ -7109,9 +7077,9 @@
       "dev": true
     },
     "k-bucket": {
-      "version": "4.0.0",
-      "resolved": "https://registry.npmjs.org/k-bucket/-/k-bucket-4.0.0.tgz",
-      "integrity": "sha512-E+rLflXOUTxgG29NLjTSNZEGt1hcvV0pZqyhbhpiPk888xk/H1uXXX07Bu2eakL4+UH6Vae4t/opJejgf5wQCQ==",
+      "version": "4.0.1",
+      "resolved": "https://registry.npmjs.org/k-bucket/-/k-bucket-4.0.1.tgz",
+      "integrity": "sha512-YvDpmY3waI999h1zZoW1rJ04fZrgZ+5PAlVmvwDHT6YO/Q1AOhdel07xsKy9eAvJjQ9xZV1wz3rXKqEfaWvlcQ==",
       "requires": {
         "inherits": "^2.0.1",
         "randombytes": "^2.0.3"
@@ -14191,9 +14159,9 @@
       }
     },
     "source-map-support": {
-      "version": "0.5.5",
-      "resolved": "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.5.tgz",
-      "integrity": "sha512-mR7/Nd5l1z6g99010shcXJiNEaf3fEtmLhRB/sBcQVJGodcHCULPp2y4Sfa43Kv2zq7T+Izmfp/WHCR6dYkQCA==",
+      "version": "0.5.6",
+      "resolved": "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.6.tgz",
+      "integrity": "sha512-N4KXEz7jcKqPf2b2vZF11lQIz9W5ZMuUcIOGj243lduidkf2fjkVKJS9vNxVWn3u/uxX38AcE8U9nnH9FPcq+g==",
       "requires": {
         "buffer-from": "^1.0.0",
         "source-map": "^0.6.0"
@@ -15109,11 +15077,6 @@
       "version": "0.1.1",
       "resolved": "https://registry.npmjs.org/timed-tape/-/timed-tape-0.1.1.tgz",
       "integrity": "sha1-m25WnxfmbHnx7tLSX/eWL8dBjkk="
-    },
-    "tiny-queue": {
-      "version": "0.2.0",
-      "resolved": "https://registry.npmjs.org/tiny-queue/-/tiny-queue-0.2.0.tgz",
-      "integrity": "sha1-xJ/LXIdVW+G0pd9+uHEB1beLydw="
     },
     "tmp": {
       "version": "0.0.33",
