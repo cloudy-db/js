@@ -74,18 +74,4 @@ describe("The RunNumberStreamify class", function() {
 		instance2.addBill(bill);
 	});
 
-	it("returns existing summary", function(done) {
-		const summary = instance1.summary$;
-
-		const subscription = summary.subscribe({
-			next: function(val) {
-				console.log("next: ", val);
-			},
-			complete: () => {done();}
-		});
-		setTimeout(() => {
-			subscription.complete();
-		}, 4000);
-	});
-
 });

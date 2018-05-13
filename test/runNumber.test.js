@@ -138,34 +138,4 @@ describe("The RunNumber class", function() {
 			wrtc: fakeRtc,
 		});
 	}).timeout(10000);
-
-	it("returns the summary of each person's debt", async function() {
-		const instance5 = await RunNumber.create({
-			ipfsStorage: "./storage/ipfs-repo-for-test-instance5",
-			orbitDbStorage: "./storage/orbitdb5",
-			namespace: undefined,
-		});
-
-		await Promise.all([
-			instance5.addBill({amount: 12345, currency: "HKD", time: new Date(), name: "Isaac", comment: ""}),
-			instance5.addBill({amount: 1478, currency: "HKD", time: new Date(), name: "Isaac", comment: ""}),
-			instance5.addBill({amount: 8567, currency: "USD", time: new Date(), name: "Isaac", comment: ""}),
-			instance5.addBill({amount: 8754, currency: "MOP", time: new Date(), name: "John", comment: ""}),
-			instance5.addBill({amount: 1470, currency: "HKD", time: new Date(), name: "John", comment: ""}),
-			instance5.addBill({amount: 8567, currency: "MOP", time: new Date(), name: "John", comment: ""}),
-		]);
-
-		const results = instance5.summary();
-		debugger;
-		assert.deepInclude(results, {
-			Isaac: {
-				HKD: 13823,
-				USD: 8567,
-			},
-			John: {
-				MOP: 17321,
-				HKD: 1470
-			},
-		});
-	});
 });

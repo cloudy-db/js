@@ -125,30 +125,6 @@ class RunNumber extends EventEmitter {
 	stop() {
 		return this.cloudy.stop();
 	}
-
-	/** @typedef {*} PersonSummary */
-
-	/**
-	 * gets a summary of each people's payments
-	 * @returns {PersonSummary[]} summary of each people's payments (i.e. amount they've paid)
-	 */
-	summary() {
-		let byPerson = groupBy(this.query(), "name");
-		byPerson = mapValues(byPerson, (person) => {
-			// @ts-ignore
-			person = groupBy(person, "currency");
-			// @ts-ignore
-			person = mapValues(person, (currency) => {
-				// @ts-ignore
-				currency = sumBy(currency, "amount");
-				return currency;
-			});
-			return person;
-		});
-
-		// @ts-ignore
-		return byPerson;
-	}
 }
 
 module.exports = RunNumber;

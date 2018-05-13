@@ -21,12 +21,6 @@ class RunNumberStreamify extends RunNumber {
 			multicast(new BehaviorSubject([])), // necessary for multicast here because of multi-threading for cancel listener
 			refCount()
 		);
-
-		/** @type {Observable} */
-		this.summary$ = autoStream(this.summary, this).pipe(
-			multicast(new BehaviorSubject([])), // necessary for multicast here because of multi-threading for cancel listener
-			refCount()
-		);
 	}
 
 	/**
