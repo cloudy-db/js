@@ -87,6 +87,7 @@ function initIpfsInstance(ipfsOrOptions, ipfsStorage, wrtc) {
 						// "/ip4/0.0.0.0/tcp/" + (10000 + Math.floor(Math.random()*55535)),
 						// "/ip4/172.28.2.3/tcp/9090/ws/p2p-webrtc-star",
 						"/dns4/nas1.isaac.pw/tcp/9090/wss/p2p-webrtc-star",
+						"/dns4/cloudy-star.isaac.pw/tcp/9090/wss/p2p-webrtc-star",
 						// "/dns6/rpi-ipv6.test/tcp/9090/ws/p2p-webrtc-star",
 					],					  
 				},

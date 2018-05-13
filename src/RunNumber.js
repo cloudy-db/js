@@ -136,7 +136,7 @@ class RunNumber extends EventEmitter {
 		let byPerson = groupBy(this.query(), "name");
 		byPerson = mapValues(byPerson, (person) => {
 			// @ts-ignore
-			person = groupBy(person, "currency")
+			person = groupBy(person, "currency");
 			// @ts-ignore
 			person = mapValues(person, (currency) => {
 				// @ts-ignore
@@ -145,7 +145,7 @@ class RunNumber extends EventEmitter {
 			});
 			return person;
 		});
-		  
+
 		// @ts-ignore
 		return byPerson;
 	}
