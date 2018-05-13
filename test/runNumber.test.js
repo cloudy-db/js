@@ -132,8 +132,8 @@ describe("The RunNumber class", function() {
 		};
 
 		RunNumber.create({
-			ipfsStorage: "./storage/ipfs-repo-for-test-instance4",
-			orbitDbStorage: "./storage/orbitdb4",
+			ipfsStorage: "./storage/ipfs-repo-for-test-instance6",
+			orbitDbStorage: "./storage/orbitdb6",
 			namespace: undefined,
 			wrtc: fakeRtc,
 		});

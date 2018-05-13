@@ -16,19 +16,14 @@ class RunNumberStreamify extends RunNumber {
 		super(cloudy, db);
 
 		/** @type {Observable} */
-		this.activities$ = autoStream(function allBills() {
-			return this.query();
-		}, this).pipe(
+		this.activities$ = autoStream(this.query, this).pipe(
 			map((arr) => orderBy(arr, "time", "desc")),
 			multicast(new BehaviorSubject([])), // necessary for multicast here because of multi-threading for cancel listener
 			refCount()
 		);
 
 		/** @type {Observable} */
-		this.summary$ = autoStream(function allBills() {
-			return this.summary();
-		}, this).pipe(
-			map((arr) => orderBy(arr, "time", "desc")),
+		this.summary$ = autoStream(this.summary, this).pipe(
 			multicast(new BehaviorSubject([])), // necessary for multicast here because of multi-threading for cancel listener
 			refCount()
 		);
