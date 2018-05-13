@@ -5432,7 +5432,7 @@
       }
     },
     "ipfs": {
-      "version": "git+https://github.com/cloudy-db/js-ipfs.git#c2a2d37b2cf4b3a28d63f7486f93351e42102a8f",
+      "version": "git+https://github.com/cloudy-db/js-ipfs.git#0bdd437f2f52f04e75994230535033e1b8bb6816",
       "requires": {
         "async": "2.6.0",
         "big.js": "5.0.3",

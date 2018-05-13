@@ -5,7 +5,7 @@
   "dependencies": {
     "libp2p-webrtc-star": "git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#allow-simple-peers-options-v0.14.0",
     "ipfs-pubsub-room": "git+https://github.com/ipfs-shipyard/ipfs-pubsub-room.git#7a7b931",
-    "ipfs": "git+https://github.com/cloudy-db/js-ipfs.git#no-bootstrap-servers",
+    "ipfs": "git+https://github.com/cloudy-db/js-ipfs.git#no-default-wrtc",
     "ipfs-repo": "0.20.0",
     "jest": "^22.4.3",
     "lodash": "^4.17.10",
