@@ -16,25 +16,20 @@ class RunNumberStreamify extends RunNumber {
 		super(cloudy, db);
 
 		/** @type {Observable} */
-		this.activities$ = Observable.create((observer) => {
-			const updateNext = () => {observer.next(this.query());};
-			updateNext();
-			this.on("replicated", () => {
-				updateNext();
-				console.log("updated2 - replicated event");
-			});
-			this.on("write", () => {
-				updateNext();
-				console.log("updated1 - write event");
-			});
-
-			return () => { // complete function
-				console.log("Completed activities$");
-				this.removeListener("replicated", updateNext);
-			};
-		}).pipe(
+		this.activities$ = autoStream(function allBills() {
+			return this.query();
+		}, this).pipe(
 			map((arr) => orderBy(arr, "time", "desc")),
-			multicast(new BehaviorSubject([])), // necessary because of multi-threading for cancel listener
+			multicast(new BehaviorSubject([])), // necessary for multicast here because of multi-threading for cancel listener
+			refCount()
+		);
+
+		/** @type {Observable} */
+		this.summary$ = autoStream(function allBills() {
+			return this.summary();
+		}, this).pipe(
+			map((arr) => orderBy(arr, "time", "desc")),
+			multicast(new BehaviorSubject([])), // necessary for multicast here because of multi-threading for cancel listener
 			refCount()
 		);
 	}
@@ -55,3 +50,22 @@ class RunNumberStreamify extends RunNumber {
 }
 
 module.exports = RunNumberStreamify; // JSDoc, sorry
+
+function autoStream(fn, context){
+	return Observable.create((observer) => {
+		function updateNext(e) {
+			console.debug("updateNext", fn.name, e);
+			observer.next(fn.apply(context));
+		}
+
+		updateNext("first");
+		context.on("replicated", updateNext);
+		context.on("write", updateNext);
+
+		return function onComplete() {
+			console.log("Completed", fn.name);
+			context.removeListener("replicated", updateNext);
+			context.removeListener("write", updateNext);
+		};
+	});
+}
