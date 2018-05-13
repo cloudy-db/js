@@ -3,6 +3,9 @@ const Cloudy = require("./Cloudy");
 const uuid = require("uuid/v4");
 const reemit = require("re-emitter");
 const EventEmitter = require("events");
+const groupBy = require("lodash/groupBy");
+const sumBy = require("lodash/sumBy");
+const mapValues = require("lodash/mapValues");
 /* eslint-disable no-unused-vars */
 
 /**
@@ -121,6 +124,30 @@ class RunNumber extends EventEmitter {
 	 */
 	stop() {
 		return this.cloudy.stop();
+	}
+
+	/** @typedef {*} PersonSummary */
+
+	/**
+	 * gets a summary of each people's payments
+	 * @returns {PersonSummary[]} summary of each people's payments (i.e. amount they've paid)
+	 */
+	summary() {
+		let byPerson = groupBy(this.query(), "name");
+		byPerson = mapValues(byPerson, (person) => {
+			// @ts-ignore
+			person = groupBy(person, "currency")
+			// @ts-ignore
+			person = mapValues(person, (currency) => {
+				// @ts-ignore
+				currency = sumBy(currency, "amount");
+				return currency;
+			});
+			return person;
+		});
+		  
+		// @ts-ignore
+		return byPerson;
 	}
 }
 
