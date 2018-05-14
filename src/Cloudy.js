@@ -6,7 +6,7 @@ const uuid = require("uuid/v4");
 const isFunction = require("lodash/isFunction");
 
 const spOptions = {
-	trickle: true,
+	trickle: false,
 	config: {
 		iceServers: [
 			{
@@ -19,6 +19,16 @@ const spOptions = {
 				urls: "turn:numb.viagenie.ca",
 				username: "numb.viagenie.ca@isaac.pw",
 				credential: "f2LZVN5PdXKRUT",
+			},
+			{
+				urls: "turn:global.turn.twilio.com:3478?transport=udp",
+				username: "38e6b7550fe01aae7007f5393343ed80b0fbfc3147772c4582dae907c26ae500",
+				credential: "jWdcI4IHxrcJ11NSbgLSaDGJmYEL1xmWuVU2I4NEOUs=",
+			},
+			{
+				urls: "turn:global.turn.twilio.com:443?transport=tcp",
+				username: "38e6b7550fe01aae7007f5393343ed80b0fbfc3147772c4582dae907c26ae500",
+				credential: "jWdcI4IHxrcJ11NSbgLSaDGJmYEL1xmWuVU2I4NEOUs=",
 			},
 		]
 	}
