@@ -24,8 +24,6 @@ const spOptions = {
 	}
 };
 
-const notBrowser = (typeof self === "undefined"); // this field hopefully matches the behaviour of https://github.com/defunctzombie/package-browser-field-spec
-
 function getLibp2pInject(wrtc) {
 	if (wrtc) {
 		// console.debug("Using injected wrtc");
@@ -40,8 +38,8 @@ function getLibp2pInject(wrtc) {
 			// @ts-ignore
 			RTCIceCandidate: global.RTCIceCandidate,
 		};
-	} else if (notBrowser) {
-		wrtc = require("wrtc");
+	} else {
+		wrtc = require("wrtc"); // leave it for https://github.com/substack/get-browser-rtc/
 	}
 
 	const WStar = require("libp2p-webrtc-star");
