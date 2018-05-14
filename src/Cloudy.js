@@ -167,8 +167,11 @@ class Cloudy extends EventEmitter {
 	/**
 	 * stops the underlying OrbitDB instance
 	 */
-	stop() {
-		return this.orbitDb.stop();
+	async stop() {
+		await this.orbitDb.stop();
+		console.debug("stopped OrbitDB instance", this.orbitDb);
+		await this.ipfs.stop();
+		console.debug("IPFS stopped", this.ipfs);
 	}
 
 	/**
