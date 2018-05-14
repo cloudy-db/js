@@ -114,17 +114,6 @@ class RunNumber extends EventEmitter {
 	get address() {
 		return this.db.address;
 	}
-
-	get namespace() {
-		return this.cloudy.namespace;
-	}
-
-	/**
-	 * stops the underlying OrbitDB instance
-	 */
-	stop() {
-		return this.cloudy.stop();
-	}
 }
 
 module.exports = RunNumber;

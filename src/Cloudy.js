@@ -125,7 +125,6 @@ class Cloudy extends EventEmitter {
 	 * @property {string} [ipfsStorage] - directory for IPFS
 	 * @property {?string} [namespace] - database address for syncing devices. falsy for new Cloudy database
 	 * @property {string} [deviceId] - unique device ID -- should be SAME each time user invokes the app
-	 * @property {Function} [wakeupFunction] - a function to wake up the device for syncing. return a promise to pause the sync
 	 * @property {Object} [storeDefaults] - default options for stores 
 	 * @property {Object} [wrtc] - WebRTC implementation following the interface at https://github.com/substack/get-browser-rtc/blob/master/index.js
 	 */
@@ -152,8 +151,10 @@ class Cloudy extends EventEmitter {
 				/** @type {OrbitDB} */
 				// @ts-ignore
 				this.orbitDb = new OrbitDB(this.ipfs, options.orbitDbStorage || "./storage/orbitdb", options.orbitDbOptions);
-				this._updateWakeupFunction(options.wakeupFunction, options.deviceId);
-	
+
+				/** @type {DocumentStore} */
+				this.devices = await this.store("devices");
+
 				this.emit("ready");
 			} catch (e) {
 				this.emit("error", e);
@@ -202,22 +203,34 @@ class Cloudy extends EventEmitter {
 	}
 
 	/**
-	 * internal function to update wakeup function
+	 * PUBLIC function to update wakeup function
 	 * @param {Function} [func] - wake up function
 	 * @param {string} [deviceId] - unique ID for device
 	 */
-	_updateWakeupFunction(func, deviceId) {
+	updateWakeupFunction(func, deviceId) {
 		/** @type {string} */
 		this.deviceId = deviceId;
 
-		this.store("devices").then(async (store) => {
-			/** @type {DocumentStore} */
-			this.devices = store;
-			if (isFunction(func)) {
-				await store.put({_id: deviceId, func: func.toString()});
-			}
+		return this.devices.put({
+			_id: deviceId,
+			func: func.toString()
 		});
+	}
 
+	/**
+	 * trigger all other devices to wake up
+	 */
+	async wakeupAll() {
+		if (!this.deviceId) {
+			console.warn("this.deviceId is NOT set. This means that this device itself will get a notification.");
+		}
+		const notMyself = !this.deviceId ? function constantTrue() { return true; } : (device) => device._id != this.deviceId;
+		const otherDevices = this.devices.query(notMyself);
+		
+		for (const device of otherDevices) {
+			const func = Function("return " + device.func)(); // https://stackoverflow.com/a/7781900/1348400
+			console.info("pretending to wake up", device._id, func);
+		}
 	}
 }
 
