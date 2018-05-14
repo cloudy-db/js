@@ -3,7 +3,6 @@ const OrbitDB = require("orbit-db");
 const IPFSRepo = require("ipfs-repo");
 const EventEmitter = require("events");
 const uuid = require("uuid/v4");
-const isFunction = require("lodash/isFunction");
 
 const spOptions = {
 //	iceTransportPolicy: "relay",
@@ -12,9 +11,6 @@ const spOptions = {
 		iceServers: [
 			{
 				urls: "stun:stun.l.google.com:19302",
-			},
-			{
-				urls: "stun:global.stun.twilio.com:3478?transport=udp",
 			},
 			{
 				urls: "turn:numb.viagenie.ca",
@@ -157,7 +153,13 @@ class Cloudy extends EventEmitter {
 		const db = await this.orbitDb.docs(this.namespace + "/" + nameOrAddress, options);
 		db.events.on("write", () => {
 			console.log("Write detected. Trying to wake them up...");
-			this.wakeupAll();
+			this.wakeupAll()
+				.then((promises) => {
+					console.log("Done waking up all devices", promises);
+				})
+				.catch((e) => {
+					console.warn("Error while trying to wake up other devices", e);
+				});
 		});
 		return db;
 	}
@@ -197,11 +199,11 @@ class Cloudy extends EventEmitter {
 		const wakeUpTries = [];
 		
 		for (const device of otherDevices) {
-			const func = Function("return " + device.func)(); // https://stackoverflow.com/a/7781900/1348400
-			console.info("pretending to wake up", device._id, func);
-			wakeUpTries.push(func);
+			console.info("pretending to wake up", device._id);
+			wakeUpTries.push(runAndCatchAllErrors(device.func));
 		}
 
+		console.debug("Promises for waking up devices", wakeUpTries);
 		return Promise.all(wakeUpTries);
 	}
 
@@ -261,3 +263,18 @@ class Cloudy extends EventEmitter {
 }
 
 module.exports = Cloudy;
+
+/**
+ * utility to catch all errors -- throws and promise rejections
+ */
+function runAndCatchAllErrors(funcStr) {
+	return new Promise((resolve, reject) => {
+		try {
+			const func = Function("return " + funcStr)(); // https://stackoverflow.com/a/7781900/1348400;
+			console.debug("Going to run", funcStr);
+			resolve(func());
+		} catch (e) {
+			reject(e);
+		}
+	});
+}
