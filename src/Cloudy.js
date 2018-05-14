@@ -6,6 +6,7 @@ const uuid = require("uuid/v4");
 const isFunction = require("lodash/isFunction");
 
 const spOptions = {
+//	iceTransportPolicy: "relay",
 	trickle: false,
 	config: {
 		iceServers: [
