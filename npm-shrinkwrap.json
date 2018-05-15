@@ -3273,6 +3273,7 @@
     },
     "fs-ext": {
       "version": "github:baudehlo/node-fs-ext#f5c9c9ec584937f8b216335d0c36d238b5d187c9",
+      "from": "fs-ext@github:baudehlo/node-fs-ext#f5c9c9ec584937f8b216335d0c36d238b5d187c9",
       "optional": true,
       "requires": {
         "nan": "2.10.0"
@@ -5433,6 +5434,7 @@
     },
     "ipfs": {
       "version": "git+https://github.com/cloudy-db/js-ipfs.git#0bdd437f2f52f04e75994230535033e1b8bb6816",
+      "from": "ipfs@git+https://github.com/cloudy-db/js-ipfs.git#0bdd437f2f52f04e75994230535033e1b8bb6816",
       "requires": {
         "async": "2.6.0",
         "big.js": "5.0.3",
@@ -5479,7 +5481,7 @@
         "libp2p-railing": "0.8.1",
         "libp2p-secio": "0.10.0",
         "libp2p-tcp": "0.12.0",
-        "libp2p-webrtc-star": "git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#d5f5564040188adca54bb1be6220e72d023faa63",
+        "libp2p-webrtc-star": "~0.14.0",
         "libp2p-websocket-star": "0.8.0",
         "libp2p-websockets": "0.12.0",
         "lodash.flatmap": "4.5.0",
@@ -5630,6 +5632,7 @@
     },
     "ipfs-pubsub-room": {
       "version": "git+https://github.com/ipfs-shipyard/ipfs-pubsub-room.git#7a7b9317d7e4ab995827c1b3adbf87153865c7f1",
+      "from": "ipfs-pubsub-room@git+https://github.com/ipfs-shipyard/ipfs-pubsub-room.git#7a7b9317d7e4ab995827c1b3adbf87153865c7f1",
       "requires": {
         "hyperdiff": "2.0.4",
         "lodash.clonedeep": "4.5.0",
@@ -5782,6 +5785,7 @@
         },
         "level-js": {
           "version": "github:timkuijsten/level.js#18e03adab34c49523be7d3d58fafb0c632f61303",
+          "from": "level-js@github:timkuijsten/level.js#18e03adab34c49523be7d3d58fafb0c632f61303",
           "requires": {
             "abstract-leveldown": "2.4.1",
             "idb-readable-stream": "0.0.4",
@@ -7225,6 +7229,7 @@
     },
     "level-js": {
       "version": "github:timkuijsten/level.js#18e03adab34c49523be7d3d58fafb0c632f61303",
+      "from": "level-js@github:timkuijsten/level.js#18e03adab34c49523be7d3d58fafb0c632f61303",
       "requires": {
         "abstract-leveldown": "2.4.1",
         "idb-readable-stream": "0.0.4",
@@ -7422,7 +7427,8 @@
       },
       "dependencies": {
         "webcrypto-shim": {
-          "version": "github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8"
+          "version": "github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8",
+          "from": "webcrypto-shim@github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8"
         }
       }
     },
@@ -7527,7 +7533,8 @@
           }
         },
         "webcrypto-shim": {
-          "version": "github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8"
+          "version": "github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8",
+          "from": "webcrypto-shim@github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8"
         }
       }
     },
@@ -7675,7 +7682,8 @@
           }
         },
         "webcrypto-shim": {
-          "version": "github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8"
+          "version": "github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8",
+          "from": "webcrypto-shim@github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8"
         }
       }
     },
@@ -7738,6 +7746,7 @@
     },
     "libp2p-webrtc-star": {
       "version": "git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#d5f5564040188adca54bb1be6220e72d023faa63",
+      "from": "libp2p-webrtc-star@git+https://github.com/isaackwan/js-libp2p-webrtc-star.git#d5f5564040188adca54bb1be6220e72d023faa63",
       "requires": {
         "async": "2.6.0",
         "class-is": "1.1.0",
@@ -7837,7 +7846,8 @@
           }
         },
         "webcrypto-shim": {
-          "version": "github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8"
+          "version": "github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8",
+          "from": "webcrypto-shim@github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8"
         }
       }
     },
@@ -12245,7 +12255,7 @@
       "resolved": "https://registry.npmjs.org/orbit-db-pubsub/-/orbit-db-pubsub-0.4.0.tgz",
       "integrity": "sha512-RXgH2XazxG8H4i80JpqIonITvPxgifw3WvMDEY+f5UljJEhCC5UPbKywMZZuMHd/khh6BjXEQWI5yxBI8ZX+Jw==",
       "requires": {
-        "ipfs-pubsub-room": "git+https://github.com/ipfs-shipyard/ipfs-pubsub-room.git#7a7b9317d7e4ab995827c1b3adbf87153865c7f1",
+        "ipfs-pubsub-room": "~1.2.0",
         "logplease": "1.2.14"
       }
     },
@@ -15654,7 +15664,8 @@
       }
     },
     "webcrypto-shim": {
-      "version": "github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8"
+      "version": "github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8",
+      "from": "webcrypto-shim@github:dignifiedquire/webcrypto-shim#190bc9ec341375df6025b17ae12ddb2428ea49c8"
     },
     "webidl-conversions": {
       "version": "4.0.2",
@@ -15662,7 +15673,8 @@
       "integrity": "sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg=="
     },
     "webrtcsupport": {
-      "version": "github:ipfs/webrtcsupport#0669f576582c53a3a42aa5ac014fcc5966809615"
+      "version": "github:ipfs/webrtcsupport#0669f576582c53a3a42aa5ac014fcc5966809615",
+      "from": "webrtcsupport@github:ipfs/webrtcsupport#0669f576582c53a3a42aa5ac014fcc5966809615"
     },
     "whatwg-encoding": {
       "version": "1.0.3",
@@ -16001,10 +16013,10 @@
           "resolved": "http://registry.npmjs.org/elliptic/-/elliptic-3.0.3.tgz",
           "integrity": "sha1-hlybQgv75VAGuflp+XoNLESWZZU=",
           "requires": {
-            "bn.js": "2.0.4",
-            "brorand": "1.0.5",
-            "hash.js": "1.0.3",
-            "inherits": "2.0.1"
+            "bn.js": "^2.0.0",
+            "brorand": "^1.0.1",
+            "hash.js": "^1.0.0",
+            "inherits": "^2.0.1"
           },
           "dependencies": {
             "brorand": {
@@ -16017,7 +16029,7 @@
               "resolved": "https://registry.npmjs.org/hash.js/-/hash.js-1.0.3.tgz",
               "integrity": "sha1-EzL/ABVsCg/92CNgE9B7d6BFFXM=",
               "requires": {
-                "inherits": "2.0.1"
+                "inherits": "^2.0.1"
               }
             }
           }
