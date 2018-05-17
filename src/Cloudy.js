@@ -30,7 +30,11 @@ const spOptions = {
 		]
 	}
 };
-
+/**
+  * method to include and set WebRTC connection
+  * @param {Object|undefined} wrtc 
+  * @returns {libp2p<connection>}
+  */
 function getLibp2pInject(wrtc) {
 	if (wrtc) {
 		// console.debug("Using injected wrtc");

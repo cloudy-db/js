@@ -17,20 +17,30 @@ function waitTillReplicated(calendar) {
 		});
 	});
 }
-
+/**
+ * utility helper for connecting IPFS nodes
+ * @param {ipfs1} The first ipfs connection to be connected
+ * @param {ipfs2} The second ipfs connection to be connected
+ */
 async function connectIpfsNodes (ipfs1, ipfs2) {
 	const id1 = await ipfs1.id()
 	const id2 = await ipfs2.id()
 	await ipfs1.swarm.connect(id2.addresses[0])
 	await ipfs2.swarm.connect(id1.addresses[0])
 }
-
+/**
+ * helper for deleting all existing records for an instance
+ * @param {instance} The instance that its records are deleted
+ * @return {Promise<all>}
+ */
 function deleteAll(instance) {
 	let all = instance.db.query(() => true);
 	all = all.map((doc) => instance.db.del(doc._id));
 	return Promise.all(all);
 }
-
+/**
+ * helper for setting constructor for WebRTC
+ */
 function once(fn) {
     var returnValue, called = false;
     return function () {
