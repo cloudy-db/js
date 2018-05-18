@@ -67,7 +67,12 @@ function getLibp2pInject(wrtc) {
 }
 
 /** @typedef {*} IPFS */
-/** @typedef {*} DocumentStore */
+/** @typedef {*} Document */
+/** 
+ * @typedef {*} DocumentStore
+ * Cloudy Docstore Interface
+ * See https://github.com/orbitdb/orbit-db-docstore
+ */
 
 /**
  * OrbitDB class {@link https://github.com/orbitdb/orbit-db}

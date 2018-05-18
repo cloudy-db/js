@@ -17,7 +17,6 @@ function mapDates(bill) {
 	return bill;
 }
 
-/** @typedef {*} DocumentStore */
 /** @typedef {*} OrbitDBAddress */
 
 /**
