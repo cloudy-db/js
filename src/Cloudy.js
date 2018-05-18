@@ -31,9 +31,10 @@ const spOptions = {
 	}
 };
 /**
-  * method to include and set WebRTC connection
-  * @param {Object|undefined} wrtc 
-  * @returns {libp2p<connection>}
+  * helper to get any additional parameters to pass to libp2p
+  * this is usually used for setting the WebRTC-Star transport
+  * @param {Object} [wrtc] WebRTC implementation confirming to the interface at https://github.com/substack/get-browser-rtc/
+  * @returns {Object}
   */
 function getLibp2pInject(wrtc) {
 	if (wrtc) {

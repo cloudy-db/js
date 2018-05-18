@@ -1,7 +1,9 @@
 # RunNumber (走數)
+
 An application to track travel expenses, across all currencies.
 
 ## Bill Interface
+
 A `Bill` is an expense made for the travel. Perhaps it could be the fee of eating out, or the cost of a plane ticket.
 
 It has a [fixed interface](https://gitlab.com/csci4140/js/blob/0a2e8732/src/RunNumber.js#L20). Note that you don't have to set something in `_id` if you are creating a new bill.
