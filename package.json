@@ -34,7 +34,7 @@
     "test": "nyc mocha",
     "lint": "eslint src/**",
     "typescript": "tsc",
-    "jsdoc": "jsdoc src/**"
+    "jsdoc": "jsdoc src/** -d docs/"
   },
   "engines": {
     "node": "^9.0.0"
